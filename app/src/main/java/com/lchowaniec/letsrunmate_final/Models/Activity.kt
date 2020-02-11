@@ -72,7 +72,6 @@ open class Activity(): Serializable, Parcelable {
         parcel.writeString(avgPace)
         parcel.writeString(url)
         parcel.writeInt(kcal)
-        parcel.writeMap(trophies.toMap())
     }
 
     override fun describeContents(): Int {
