@@ -59,6 +59,7 @@ class PostViewFragment() : Fragment() {
     private lateinit var mTropnyWhite:ImageView
     private lateinit var mProfileImage:ImageView
     private lateinit var mLikeDesc:TextView
+    private lateinit var mComment:ImageView
     //vars
     private lateinit var mActivity:Activity
     private var mActivityNumber:Int =0
@@ -94,6 +95,7 @@ class PostViewFragment() : Fragment() {
         mTropnyWhite = view.findViewById(R.id.post_trophy_unclicked)
         mProfileImage = view.findViewById(R.id.post_profile_photo)
         mLikeDesc = view.findViewById(R.id.post_like_desc)
+        mComment = view.findViewById(R.id.post_comment)
 
 
         mTrophy = Trophy(mTropnyWhite,mTrophyGold)
@@ -430,6 +432,7 @@ class PostViewFragment() : Fragment() {
 
     }
     private fun setupWidgets(){
+        mCaption.text = mActivity.caption
         val timeDifference = getTimestampDiff()
         if(!timeDifference.equals("0")){
             mTimesTamp.text = timeDifference + getString(R.string.days_ago)
@@ -439,7 +442,14 @@ class PostViewFragment() : Fragment() {
         ImageLoader().setImage(mUserDetails.profile_photo,mProfileImage,null,"")
         mUsername.text = mUserDetails.username
         mLikeDesc.text = mTrophyString
-        mCaption.text = mActivity.caption
+
+        mBackArrow.setOnClickListener {
+            activity!!.supportFragmentManager.popBackStack()
+
+        }
+        mComment.setOnClickListener{
+            
+        }
         if(TrophiedByUser){
             mTropnyWhite.visibility = View.GONE
             mTrophyGold.visibility = View.VISIBLE

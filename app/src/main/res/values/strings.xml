@@ -71,6 +71,10 @@
     <string name="photo">photo</string>
     <string name="days_ago">\tDAYS AGO</string>
     <string name="run">Run</string>
+    <string name="add_comment_here">Add comment here</string>
+    <string name="comments">Comments</string>
+    <string name="reply">Reply</string>
+    <string name="today">today</string>
 
 
 </resources>
