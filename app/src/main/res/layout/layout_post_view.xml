@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:id="@+id/relativeLayout1">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_centerVertical="true"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/post_profile_photo"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                app:civ_border_width="0.5dp"
+                app:civ_border_color="@color/black"/>
+                <TextView
+                    android:text="lukibzdziuki"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/post_profile_photo"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/profile_username"
+                    android:textColor="@color/black"
+                    android:layout_marginLeft="20dp"/>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/icon_profile_menu"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/post_options_image"/>
+            </RelativeLayout>
+                <com.mapbox.mapboxsdk.maps.MapView
+                    android:layout_below="@id/relativeLayout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:id="@+id/post_mapview">
+
+                </com.mapbox.mapboxsdk.maps.MapView>
+            <RelativeLayout
+                android:layout_below="@id/post_mapview"
+                android:id="@+id/post_icons_tab"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+                <RelativeLayout
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/post_trophy_layout"
+                    android:background="@color/white">
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/post_trophy_clicked"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/trophy_icon_clicked"
+                    android:visibility="invisible"
+                    />
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/post_trophy_unclicked"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/ic_cup_unclicked"
+                    android:visibility="visible"
+                    />
+
+
+            </RelativeLayout>
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/post_comment"
+                android:layout_toRightOf="@id/post_trophy_layout"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/ic_comment"
+                android:visibility="visible"
+                />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/post_rel_layout3"
+                android:layout_below="@id/post_icons_tab"
+                android:padding="20dp"
+                android:layout_marginBottom="50dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trophied by lukibzdziuki and 10 others"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:id="@+id/post_like_desc"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="lukibzdziuki best run ever!"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/post_like_desc"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:id="@+id/post_like_username"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View more comments..."
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/post_like_username"
+                    android:textSize="18sp"
+                    android:textColor="@color/black"
+                    android:id="@+id/post_comments"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10 DAYS AGO"
+                    android:layout_marginTop="5dp"
+                    android:layout_below="@id/post_comments"
+                    android:textSize="18sp"
+                    android:textColor="@color/grey"
+                    android:id="@+id/post_time_ago"/>
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+
+
+    </ScrollView>
+    <RelativeLayout
+        android:id="@+id/bottom_lrel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/bottomNaviViewBar"
+            android:background="@drawable/white_top"
+            app:menu="@menu/bottom_menu"
+            app:labelVisibilityMode="unlabeled">
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

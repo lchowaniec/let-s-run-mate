@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/post_rel_layout1">
+
+        <include layout="@layout/snippet_post_toolbar" android:id="@+id/post_toolbar"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/post_rel_layout2"
+        android:layout_below="@id/post_rel_layout1">
+
+        <include layout="@layout/layout_post_view" android:id="@+id/post_postview"/>
+    </RelativeLayout>
+
+</RelativeLayout>

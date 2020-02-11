@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Profile.AccountSettingsActivity">
+    <include layout="@layout/layout_center_viewpager"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/account_settings_allview">
+
+
+            <include layout="@layout/account_settings_bar_layout" android:id="@+id/account_settings_appbar"/>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_below="@id/account_settings_appbar"
+    android:layout_above="@id/bottom_navi">
+    <include layout="@layout/account_settings_center_layout"/>
+
+</RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/bottom_navi"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_alignParentBottom="true"
+            >
+
+            <include layout="@layout/bottomnavi_layout" />
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

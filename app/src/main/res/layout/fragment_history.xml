@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/history_appbar"
+        layout="@layout/history_bar_layout" />
+
+
+
+
+
+
+    <RelativeLayout
+        android:layout_below="@id/history_appbar"
+        android:id="@+id/history_allview"
+        android:paddingBottom="-60dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_above="@id/bottom_lrel"
+        android:layout_below="@id/history_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ListView
+            android:id="@+id/history_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </ListView>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/bottom_lrel"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/bottomNaviViewBar"
+            android:background="@drawable/white_top"
+            app:menu="@menu/bottom_menu"
+            app:labelVisibilityMode="unlabeled">
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+    </RelativeLayout>
+
+
+    <ProgressBar
+        android:layout_centerVertical="true"
+        android:id="@+id/history_progress_bar"
+        android:visibility="visible"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</RelativeLayout>

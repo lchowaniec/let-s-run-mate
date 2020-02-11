@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/home"
+        android:icon="@drawable/home_selector"
+        android:title="@string/home"
+
+        />
+    <item android:id="@+id/feed"
+        android:title="@string/community"
+        android:icon="@drawable/feed_selector"
+
+        />
+
+    <item android:id="@+id/history"
+        android:title="@string/history"
+        android:icon="@drawable/history_selector"
+        android:checked="true"
+
+        />
+
+
+    <item android:id="@+id/messages"
+        android:title="@string/messages"
+        android:icon="@drawable/messages_selector"
+
+        />
+    <item android:id="@+id/profile"
+        android:title="@string/settings"
+        android:icon="@drawable/profile_selector"
+
+        />
+
+</menu>

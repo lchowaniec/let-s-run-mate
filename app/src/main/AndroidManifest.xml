@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lchowaniec.letsrunmate_final">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature android:name="android.hardware.wifi" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +17,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".History.HistoryActivity" />
+        <activity android:name=".Run.SummaryActivity" />
+        <activity android:name=".Run.RunActivityController" />
+        <activity android:name=".Profile.AccountSettingsActivity" />
+        <activity android:name=".Profile.ProfileActivity" />
+        <activity
+            android:name=".Login_Register.LoginActivity"
+            android:parentActivityName=".Login_Register.StartActivity" />
+        <activity
+            android:name=".Login_Register.RegisterActivity"
+            android:parentActivityName=".Login_Register.StartActivity" />
+        <activity android:name=".Login_Register.StartActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,6 +36,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Run.RunActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

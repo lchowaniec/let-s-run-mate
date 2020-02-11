@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile.EditProfileFragment"
+    android:background="@color/white"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+   <RelativeLayout
+       android:id="@+id/edit_profile_top"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+       <include layout="@layout/edit_profile_bar" android:id="@+id/edit_profile_appbar"/>
+   </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_profile_top"
+            android:id="@+id/edit_profile_center">
+            <include layout="@layout/edit_profile_center"/>
+        </RelativeLayout>
+
+
+
+
+
+
+
+    </RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
