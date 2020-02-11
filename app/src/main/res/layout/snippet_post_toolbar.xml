@@ -20,7 +20,7 @@
                     android:src="@drawable/icon_settings_back"
                     />
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:textSize="25sp"
@@ -28,7 +28,7 @@
                     android:layout_marginStart="30dp"
                     android:fontFamily="@font/bangers"
                     android:textColor="@color/white"
-                    android:text="Run\t"
+                    android:text="@string/run"
                     android:id="@+id/post_titleBar"/>
             </RelativeLayout>
 

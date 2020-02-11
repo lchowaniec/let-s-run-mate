@@ -7,8 +7,9 @@ open class UserDetails(){
      var friends: Int = 0
      var activities: Int =0
     var profile_photo :String = ""
+    var user_id:String =  ""
 
-    constructor(description: String, username: String, distance: Float, friends: Int, activities: Int,profile_photo:String): this() {
+    constructor(description: String, username: String, distance: Float, friends: Int, activities: Int,profile_photo:String,user_id:String): this() {
 
         this.description = description
         this.username = username
@@ -16,6 +17,7 @@ open class UserDetails(){
         this.friends = friends
         this.activities = activities
         this.profile_photo = profile_photo
+        this.user_id = user_id
 
     }
 

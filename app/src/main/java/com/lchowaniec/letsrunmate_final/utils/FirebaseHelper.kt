@@ -84,7 +84,7 @@ open class FirebaseHelper(context: Context) {
 
     open fun getTime(): String {
         val mDate = SimpleDateFormat("yyyy-MM-dd, HH:mm:ss", Locale.getDefault())
-      //  mDate.timeZone = TimeZone.getTimeZone("EUROPE/BERLIN")
+        mDate.timeZone = TimeZone.getDefault()
         return mDate.format(Date())
     }
 
@@ -248,7 +248,8 @@ open class FirebaseHelper(context: Context) {
             0F,
             0,
             0,
-            ""
+            "",
+            userID
         )
         if (userID != null) {
             myRef.child(mContext.getString(R.string.firebase_user_details))
@@ -363,6 +364,9 @@ open class FirebaseHelper(context: Context) {
                 (ds.child(userID)
                     .getValue(UserDetails::class.java)?.profile_photo!!
                         )
+                settings.user_id =
+                    (ds.child(userID)
+                        .getValue(UserDetails::class.java)?.user_id)!!
 
                 }
             //user

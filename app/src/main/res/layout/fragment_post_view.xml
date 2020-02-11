@@ -15,7 +15,9 @@
         android:id="@+id/post_rel_layout2"
         android:layout_below="@id/post_rel_layout1">
 
-        <include layout="@layout/layout_post_view" android:id="@+id/post_postview"/>
+        <include
+            android:id="@+id/post_postview"
+            layout="@layout/layout_post_view" />
     </RelativeLayout>
 
 </RelativeLayout>

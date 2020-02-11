@@ -115,11 +115,11 @@ class ProfileFragment : Fragment() {
 
     }
 
-                    /* FIREBASE*/
+    /* FIREBASE*/
     private fun setupFirebaseAuth(){
         mAuth = FirebaseAuth.getInstance()
 
-                        mAuthListener = FirebaseAuth.AuthStateListener {
+        mAuthListener = FirebaseAuth.AuthStateListener {
             fun onAuthStateChanged(firebaseAuth: FirebaseAuth) {
                 val user: FirebaseUser? = firebaseAuth.currentUser
 
@@ -139,7 +139,7 @@ class ProfileFragment : Fragment() {
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                   setProfileDetails( mFirebaseHelper.getAccountsSettings(dataSnapshot))
+                    setProfileDetails( mFirebaseHelper.getAccountsSettings(dataSnapshot))
 
 
 
@@ -150,7 +150,7 @@ class ProfileFragment : Fragment() {
 
 
         }
-                    }
+    }
 
 
     override fun onStart() {

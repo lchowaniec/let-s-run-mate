@@ -37,6 +37,20 @@
     <string name="are_you_sure_you_want_to_sign_out">Are you sure, you want to sign out ?</string>
     <string name="sign_out">Sign out</string>
     <string name="signing_out">Signing out</string>
+    <string name="user_id">user_id</string>
+    <string name="firebase_trophies">trophies</string>
+    <string name="firebase_date">date</string>
+    <string name="firebase_duration_time">duration_time</string>
+    <string name="firebase_distance">distance</string>
+    <string name="firebase_caption">caption</string>
+    <string name="firebase_activity_id">activity_id</string>
+    <string name="firebase_user_id">user_id</string>
+    <string name="firebase_avgPace">avgPace</string>
+    <string name="firebase_points">points</string>
+    <string name="firebase_url">url</string>
+    <string name="firebase_kcal">kcal</string>
+    <string name="firebase_url_photo">url_photo</string>
+
     <!-- Names -->
     <string name="activity_path"></string>
     <string name="conteiner">container</string>
@@ -44,7 +58,6 @@
     <string name="main_fragment">main_fragment</string>
     <string name="username_firebase">username</string>
     <string name="description_firebase">description</string>
-    <string name="firebase_url">url</string>
     <!--Mapboxkey-->
     <string name="mapboxkey">pk.eyJ1IjoibHVrYXN6LWNoIiwiYSI6ImNrNTZxN2Z5MjA2NnQzbHBnaHc0MnhwbHkifQ.37F97TiqsT5r_v0snjdeYQ</string>
     <string name="basic_run">Basic run</string>
@@ -55,6 +68,9 @@
     <string name="splits">Splits</string>
     <string name="you_really_want_to_discard_this_run">You really want to discard this run ?</string>
     <string name="sure">Sure ?</string>
-    <string name="firebase_url_photo">url_photo</string>
+    <string name="photo">photo</string>
+    <string name="days_ago">\tDAYS AGO</string>
+    <string name="run">Run</string>
+
 
 </resources>

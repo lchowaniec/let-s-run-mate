@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/post_profile_photo"
                     android:layout_centerVertical="true"
-                    android:id="@+id/profile_username"
+                    android:id="@+id/post_username"
                     android:textColor="@color/black"
                     android:layout_marginLeft="20dp"/>
                 <ImageView
@@ -42,15 +42,16 @@
                     android:layout_centerVertical="true"
                     android:id="@+id/post_options_image"/>
             </RelativeLayout>
-                <com.mapbox.mapboxsdk.maps.MapView
+                <com.lchowaniec.letsrunmate_final.utils.SquareImageView
                     android:layout_below="@id/relativeLayout1"
                     android:layout_width="match_parent"
-                    android:layout_height="350dp"
-                    android:id="@+id/post_mapview">
+                    android:layout_height="wrap_content"
+                    android:id="@+id/post_image"
+                    android:scaleType="centerCrop"/>
 
-                </com.mapbox.mapboxsdk.maps.MapView>
             <RelativeLayout
-                android:layout_below="@id/post_mapview"
+                android:background="@color/white"
+                android:layout_below="@id/post_image"
                 android:id="@+id/post_icons_tab"
                 android:layout_width="match_parent"
                 android:layout_height="50dp">
@@ -92,34 +93,36 @@
                 />
             </RelativeLayout>
             <RelativeLayout
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/post_rel_layout3"
                 android:layout_below="@id/post_icons_tab"
-                android:padding="20dp"
+                android:padding="10dp"
                 android:layout_marginBottom="50dp">
+
                 <TextView
+                    android:id="@+id/post_like_desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Trophied by lukibzdziuki and 10 others"
-                    android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:id="@+id/post_like_desc"/>
+                    android:textSize="16sp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="lukibzdziuki best run ever!"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:layout_below="@id/post_like_desc"
                     android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:id="@+id/post_like_username"/>
+                    android:id="@+id/post_caption"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="View more comments..."
                     android:layout_marginTop="5dp"
-                    android:layout_below="@id/post_like_username"
+                    android:layout_below="@id/post_caption"
                     android:textSize="18sp"
                     android:textColor="@color/black"
                     android:id="@+id/post_comments"/>

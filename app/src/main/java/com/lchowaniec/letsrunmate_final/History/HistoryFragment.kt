@@ -17,11 +17,16 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.lchowaniec.letsrunmate_final.Models.Activity
+import com.lchowaniec.letsrunmate_final.Models.Trophy
+import com.lchowaniec.letsrunmate_final.Post.PostViewFragment
 import com.lchowaniec.letsrunmate_final.R
 import com.lchowaniec.letsrunmate_final.utils.ActivityListAdapter
 import com.lchowaniec.letsrunmate_final.utils.BottomNaviViewHelper
 import com.lchowaniec.letsrunmate_final.utils.FirebaseHelper
 import com.nostra13.universalimageloader.core.ImageLoader
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 /**
  * A simple [Fragment] subclass.
@@ -85,15 +90,56 @@ class HistoryFragment : Fragment() {
             }
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 arra.add(p0.getValue(Activity::class.java)!!)
                 adapter.notifyDataSetChanged()
-                mProgressBar.visibility = View.GONE
+                mProgressBar.visibility = View.GONE            }
 
-            }
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+               // for(snap:DataSnapshot in p0.children){
+                  /*  val activity = Activity()
+                     //val objectMap2 :Map<String, String>  =  snap.getValue() as (HashMap<String, String>)
+
+                    val objectMap:HashMap<*,*> = snap.getValue()as HashMap<*, *>
+                    activity.url_photo = objectMap.get(getString(R.string.firebase_url_photo)).toString()
+                    activity.url = objectMap.get(getString(R.string.firebase_url)).toString()
+                    activity.date = objectMap.get(getString(R.string.firebase_date)).toString()
+                    activity.avgPace = objectMap.get(getString(R.string.firebase_avgPace)).toString()
+                    activity.duration_time = objectMap.get(getString(R.string.firebase_duration_time)).toString()
+                    activity.distance = objectMap.get(getString(R.string.firebase_distance)).toString()
+                    activity.caption = objectMap.get(getString(R.string.firebase_caption)).toString()
+                    activity.activity_id = objectMap.get(getString(R.string.firebase_activity_id)).toString()
+                    activity.user_id = objectMap.get(getString(R.string.firebase_user_id)).toString()
+                    activity.kcal = objectMap.get(getString(R.string.firebase_kcal)).toString().toInt()
+                    val trophieList = ArrayList<Trophy>()
+                    for(dSnap:DataSnapshot in snap
+                        .child(getString(R.string.firebase_trophies)).children){
+                        val trophy = Trophy()
+                        trophy.user_id = dSnap.getValue(Trophy()::class.java)!!.user_id
+                        trophieList.add(trophy)
+                    }*/
+                   // activity.trophies = trophieList
+                    arra.add(p0.getValue(Activity::class.java)!!)
+                    adapter.notifyDataSetChanged()
+                    mProgressBar.visibility = View.GONE            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //}
+
+
+
+
+
 
             override fun onChildRemoved(p0: DataSnapshot) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -104,10 +150,11 @@ class HistoryFragment : Fragment() {
         setupBottomNavigationBar()
         mListView.onItemClickListener = object : AdapterView.OnItemClickListener{
             override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val newFragment = PostViewFragment()
                 val bundle = Bundle()
                 println(adapter.getItem(position))
                 bundle.putSerializable("Activity",adapter.getItem(position))
-                val newFragment = HistorySummaryFragment()
+                bundle.putInt("Activity_number",ACTIVITY_NUM)
                 newFragment.arguments = bundle
 
                 val transaction = activity!!.supportFragmentManager.beginTransaction().apply {

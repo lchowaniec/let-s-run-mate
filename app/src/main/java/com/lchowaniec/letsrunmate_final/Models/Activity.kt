@@ -1,9 +1,16 @@
 package com.lchowaniec.letsrunmate_final.Models
 
+import android.os.Parcel
+import android.os.Parcelable
+import android.provider.ContactsContract
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.lchowaniec.letsrunmate_final.R
 import com.mapbox.geojson.Point
 import java.io.Serializable
 
-open class Activity(): Serializable{
+open class Activity(): Serializable, Parcelable {
     var date:String =""
     var duration_time:String =""
     var distance:String=""
@@ -15,9 +22,32 @@ open class Activity(): Serializable{
     var points:ArrayList<Point> = ArrayList()
     var url: String = ""
     var kcal:Int = 0
+    var url_photo:String  =""
+    var trophies: HashMap<String,Trophy> = HashMap()
 
 
-    constructor(date:String,duration_time:String,caption:String,activity_id:String,user_id:String,distance:String,avgPace:String,points:ArrayList<Point>,url:String,kcal:Int) :this(){
+
+
+
+
+    constructor(parcel: Parcel) : this() {
+        parcel.writeString(date)
+        parcel.writeString(duration_time)
+        parcel.writeString(distance)
+        parcel.writeString(caption)
+        parcel.writeString(activity_id)
+        parcel.writeString(user_id)
+        parcel.writeString(avgPace)
+        parcel.writeString(url)
+        parcel.writeString(kcal.toString())
+        parcel.writeString(url_photo)
+        parcel.writeMap(trophies.toMap())
+
+
+    }
+
+
+    constructor(date:String,duration_time:String,caption:String,activity_id:String,user_id:String,distance:String,avgPace:String,points:ArrayList<Point>,url:String,kcal:Int,url_photo:String,trophies:HashMap<String,Trophy>) :this(){
         this.date = date
         this.duration_time = duration_time
         this.caption = caption
@@ -28,8 +58,36 @@ open class Activity(): Serializable{
         this.points = points
         this.url = url
         this.kcal = kcal
+        this.url_photo = url_photo
+        this.trophies = trophies
     }
 
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(date)
+        parcel.writeString(duration_time)
+        parcel.writeString(distance)
+        parcel.writeString(caption)
+        parcel.writeString(activity_id)
+        parcel.writeString(user_id)
+        parcel.writeString(avgPace)
+        parcel.writeString(url)
+        parcel.writeInt(kcal)
+        parcel.writeMap(trophies.toMap())
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Activity> {
+        override fun createFromParcel(parcel: Parcel): Activity {
+            return Activity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Activity?> {
+            return arrayOfNulls(size)
+        }
+    }
 
 
 }

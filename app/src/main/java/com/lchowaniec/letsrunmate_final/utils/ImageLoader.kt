@@ -34,6 +34,7 @@ open class ImageLoader {
             .showImageOnLoading(imageDefault)
             .showImageForEmptyUri(imageDefault)
             .showImageOnFail(imageDefault)
+            .considerExifParams(true)
             .cacheOnDisk(true).cacheInMemory(true)
             .cacheOnDisk(true).resetViewBeforeLoading(true)
             .imageScaleType(ImageScaleType.EXACTLY)

@@ -392,18 +392,7 @@ class RunFragment : Fragment() {
     override fun onStart() {
         super.onStart()
         mAuth.addAuthStateListener(mAuthListener)
-        myRef.addListenerForSingleValueEvent(object: ValueEventListener {
-            override fun onCancelled(dataSnapshot: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
 
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                activityCounter = FirebaseHelper(activity!!.applicationContext).activityCounter(dataSnapshot)
-
-
-            }
-
-        })
     }
 
     // FIREBASE CONFIG
