@@ -16,7 +16,7 @@ class ActivityListAdapter(context: Context, resource: Int, objects: MutableList<
     private val mResource = resource
     private val mObject = objects
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var retView: View
+        val retView: View
         if(convertView == null) {
             val distance = getItem(position)!!.distance
             val date = getItem(position)!!.date
@@ -44,7 +44,7 @@ class ActivityListAdapter(context: Context, resource: Int, objects: MutableList<
             mDistance.typeface = myFont
             mDistance.text = "$distance km"
             mKcal.typeface = myFont2
-            mKcal.text = "${kcal} kcal"
+            mKcal.text = "$kcal kcal"
             mDate.typeface = myFont3
             mDate.text = date
             mTime.typeface = myFont2

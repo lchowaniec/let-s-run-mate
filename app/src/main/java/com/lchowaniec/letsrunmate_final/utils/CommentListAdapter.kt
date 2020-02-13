@@ -1,28 +1,25 @@
 package com.lchowaniec.letsrunmate_final.utils
 
 import android.content.Context
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.getSystemService
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.lchowaniec.letsrunmate_final.Models.Comment
-import com.lchowaniec.letsrunmate_final.Models.User
 import com.lchowaniec.letsrunmate_final.Models.UserDetails
 import com.lchowaniec.letsrunmate_final.R
 import com.nostra13.universalimageloader.core.ImageLoader
-import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToLong
 
 open class CommentListAdapter(context: Context, resource: Int, objects: MutableList<Comment>):
     ArrayAdapter<Comment>(context, resource, objects) {
@@ -50,8 +47,8 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var viewHolder:ViewHolder = ViewHolder()
-        var retView:View?
+        var viewHolder = ViewHolder()
+        val retView:View?
         if(convertView==null){
             val inflater = LayoutInflater.from(context)
 
@@ -64,14 +61,14 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
             viewHolder.reply = retView.findViewById(R.id.comment_reply)
             viewHolder.profileImage = retView.findViewById(R.id.comment_circleView)
             viewHolder.imageTrophy = retView.findViewById(R.id.comment_trophy)
-            retView.setTag(viewHolder)
+            retView.tag = viewHolder
         }else{
             retView = convertView
         }
 
         viewHolder.comment.text = getItem(position)!!.comment
         val difference = getTimestampDiff(getItem(position)!!)
-        if(!difference.equals("0")){
+        if(difference != "0"){
             viewHolder.timestamp.text = "$difference d"
         }else{
             viewHolder.timestamp.text = context.getString(R.string.today)
@@ -124,11 +121,12 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
         val timestamp: Date
         val today = c.time
         format.format(today)
-        val activity_date =  comment.date
+        val activityDate =  comment.date
 
         try{
-            timestamp = format.parse(activity_date)!!
-            difference = Math.round(((today.time.toDouble() - timestamp.time)/1000/60/60/24)).toString()
+            timestamp = format.parse(activityDate)!!
+            difference = ((today.time.toDouble() - timestamp.time) / 1000 / 60 / 60 / 24).roundToLong()
+                .toString()
             println(difference)
             // difference = getString(Math.round(((today.time.toDouble() - timestamp.time)/1000/60/60/24)).toInt())
 

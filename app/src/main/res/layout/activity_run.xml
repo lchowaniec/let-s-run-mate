@@ -14,7 +14,7 @@
         android:layout_marginTop="100dp"
         android:fontFamily="@font/bowlby_one_sc"
         android:gravity="center"
-        android:hint="0,00"
+        android:hint="@string/_0_00"
         android:textColor="@color/black"
         android:textSize="80sp"
         app:layout_constraintBottom_toTopOf="@+id/pause_run_button"

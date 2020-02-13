@@ -92,17 +92,17 @@ class EditProfileFragment : Fragment() {
                         user.username = ds.getValue(User::class.java)!!.username
                     }
                 }
-                if(mUserAllDetails.user.username.equals(username)){
+                if(mUserAllDetails.user.username == username){
                     Toast.makeText(mContext,"nothing change",Toast.LENGTH_SHORT).show()
 
 
 
-                }else if(!mUserAllDetails.user.username.equals(username)){
+                }else if(mUserAllDetails.user.username != username){
 
                     isExists(username)
 
                 }
-                if(!mUserAllDetails.userDetails.description.equals(mDescription)){
+                if(!mUserAllDetails.userDetails.description.equals(mDescription) ){
                     mFirebaseHelper.updateDescription(description)
                 }
 

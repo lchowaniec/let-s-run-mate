@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback,PermissionsListener 
     private lateinit var mAuth: FirebaseAuth
     private var ACTIVITY_NUM = 0
     private var permissionManager = PermissionsManager(this)
-    lateinit var mapboxMap: MapboxMap
+    private lateinit var mapboxMap: MapboxMap
    // private lateinit var scrollView:HorizontalScrollView = findViewById(R.id.scrollViewRuns)
 
 
@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback,PermissionsListener 
 
 
 
-    fun showStartScreen(){
+    private fun showStartScreen(){
         val startIntent = Intent(this,
             StartActivity::class.java)
         startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -184,7 +184,7 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback,PermissionsListener 
     
     private fun setupBottomNavigationBar(){
 
-        var bottomNaviBar : BottomNavigationView = findViewById(R.id.bottomNaviViewBar)
+        val bottomNaviBar : BottomNavigationView = findViewById(R.id.bottomNaviViewBar)
         BottomNaviViewHelper().setupBottomNaviView(bottomNaviBar)
         BottomNaviViewHelper().enableNavigationBar(baseContext,bottomNaviBar)
         val menu: Menu = bottomNaviBar.menu

@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 
 class SectionsStatePagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapter(fm) {
 
-    private var mFragmentList : ArrayList<Fragment> = ArrayList<Fragment>()
+    private var mFragmentList : ArrayList<Fragment> = ArrayList()
     private var mFragments:HashMap<Fragment,Int> = HashMap()
     private var mFragmentNumbers: HashMap<String,Int> = HashMap()
     private var mFragmentNames: HashMap<Int,String> = HashMap()
@@ -16,7 +16,7 @@ class SectionsStatePagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapte
 
 
     override fun getItem(position: Int): Fragment {
-        return mFragmentList.get(position)
+        return mFragmentList[position]
     }
 
     override fun getCount(): Int {
@@ -25,27 +25,27 @@ class SectionsStatePagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapte
     }
      fun addFragment(fragment: Fragment,fragmentName:String){
         mFragmentList.add(fragment)
-        mFragments.put(fragment,mFragmentList.size-1)
-        mFragmentNumbers.put(fragmentName,mFragmentList.size-1)
-        mFragmentNames.put(mFragmentList.size-1,fragmentName)
+         mFragments[fragment] = mFragmentList.size-1
+         mFragmentNumbers[fragmentName] = mFragmentList.size-1
+         mFragmentNames[mFragmentList.size-1] = fragmentName
     }
     private fun getFragmentNumber(fragmentName: String): Int? {
         if(mFragmentNumbers.containsKey(fragmentName)){
-            return mFragmentNumbers.get(fragmentName)
+            return mFragmentNumbers[fragmentName]
         }else{
             return null
         }
     }
     fun getFragmentNumber(fragment:Fragment):Int? {
         if(mFragments.containsKey(fragment)){
-            return mFragments.get(fragment)
+            return mFragments[fragment]
         }else{
             return null
         }
     }
     fun getFragmentName(fragmentNumber:Int):String? {
         if(mFragmentNames.containsKey(fragmentNumber)){
-            return mFragmentNames.get(fragmentNumber)
+            return mFragmentNames[fragmentNumber]
         }else{
             return null
         }

@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         log_email.requestFocus()
         log_login_btn.setOnClickListener {
-            if(!log_email.toString().isEmpty() || !log_password.toString().isEmpty()){
+            if(log_email.toString().isNotEmpty() || log_password.toString().isNotEmpty()){
                 loginUser(log_email.text.toString().trim(),log_password.text.toString().trim())
                 login_progress_bar.visibility = View.VISIBLE
                 login_wait.visibility = View.VISIBLE
@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
     }
-    fun loginUser(email:String, password:String){
+    private fun loginUser(email:String, password:String){
         mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this){task->
             if(task.isSuccessful){
                 val intent = Intent(this, MainActivity::class.java)

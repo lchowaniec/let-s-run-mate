@@ -55,15 +55,15 @@ class ProfileFragment : Fragment() {
         mAuth = FirebaseAuth.getInstance()
         mFirebaseDatabase = FirebaseDatabase.getInstance()
         myRef = mFirebaseDatabase.reference
-        bottomNavigationView = view.findViewById<BottomNavigationView>(R.id.bottomNaviViewBar)
+        bottomNavigationView = view.findViewById(R.id.bottomNaviViewBar)
         mUsername = view.findViewById(R.id.profile_username)
         mActivities = view.findViewById(R.id.show_activities)
         mDistance = view.findViewById(R.id.show_distance)
         mFriends = view.findViewById(R.id.show_friends)
 
 
-        progressBar = view.findViewById<ProgressBar>(R.id.profile_progress_bar)
-        profile_menu = view.findViewById<ImageView>(R.id.profile_menu)
+        progressBar = view.findViewById(R.id.profile_progress_bar)
+        profile_menu = view.findViewById(R.id.profile_menu)
         profile_photo = view.findViewById(R.id.edit_profile_photo)
         progressBar.visibility= View.GONE
         mContext = activity

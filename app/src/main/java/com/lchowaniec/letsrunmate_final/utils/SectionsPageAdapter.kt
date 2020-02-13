@@ -6,11 +6,11 @@ import androidx.fragment.app.FragmentPagerAdapter
 
 class SectionsPageAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
 
-    var mFragmentList : ArrayList<Fragment> = ArrayList<Fragment>()
+    private var mFragmentList : ArrayList<Fragment> = ArrayList()
 
 
     override fun getItem(position: Int): Fragment {
-        return mFragmentList.get(position)
+        return mFragmentList[position]
     }
 
     override fun getCount(): Int {

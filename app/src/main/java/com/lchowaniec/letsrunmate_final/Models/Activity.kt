@@ -2,11 +2,6 @@ package com.lchowaniec.letsrunmate_final.Models
 
 import android.os.Parcel
 import android.os.Parcelable
-import android.provider.ContactsContract
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.lchowaniec.letsrunmate_final.R
 import com.mapbox.geojson.Point
 import java.io.Serializable
 
@@ -23,7 +18,7 @@ open class Activity(): Serializable, Parcelable {
     var url: String = ""
     var kcal:Int = 0
     var url_photo:String  =""
-    var trophies: HashMap<String,Trophy> = HashMap()
+    private var trophies: HashMap<String,Trophy> = HashMap()
 
 
 
