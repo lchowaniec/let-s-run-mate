@@ -1,39 +1,24 @@
 package com.lchowaniec.letsrunmate_final.Post
 
 
-import android.annotation.SuppressLint
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.renderscript.Sampler
-import android.util.Log
-import android.view.*
+import android.view.GestureDetector
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.lchowaniec.letsrunmate_final.Models.Activity
 import com.lchowaniec.letsrunmate_final.Models.UserDetails
 import com.lchowaniec.letsrunmate_final.R
-import com.lchowaniec.letsrunmate_final.utils.*
-import java.lang.NullPointerException
-import java.lang.StringBuilder
-import java.text.ParseException
-import java.text.SimpleDateFormat
-import java.util.*
-import android.view.MotionEvent
-import android.view.GestureDetector
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.lchowaniec.letsrunmate_final.Models.User
-import org.w3c.dom.Text
-import com.google.firebase.database.DatabaseError
-import java.nio.file.Files.exists
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.DatabaseReference
+import com.lchowaniec.letsrunmate_final.utils.FirebaseHelper
+import com.lchowaniec.letsrunmate_final.utils.SquareImageView
+import com.lchowaniec.letsrunmate_final.utils.Trophy
 
 
 
@@ -41,7 +26,7 @@ import com.google.firebase.database.DatabaseReference
 /**
  * A simple [Fragment] subclass.
  */
-class CommentsViewFragment() : Fragment() {
+class CommentsViewFragment : Fragment() {
 
     //fields
     private lateinit var mImage: SquareImageView

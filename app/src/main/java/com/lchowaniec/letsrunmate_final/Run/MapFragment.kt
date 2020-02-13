@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.fragment_map.*
  * A simple [Fragment] subclass.
  */
 class MapFragment : Fragment(), OnMapReadyCallback, PermissionsListener {
-    lateinit var mapboxMap: MapboxMap
+    private lateinit var mapboxMap: MapboxMap
     private var permissionManager = PermissionsManager(this)
 
 

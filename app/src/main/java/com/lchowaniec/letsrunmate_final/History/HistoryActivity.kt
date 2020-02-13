@@ -27,7 +27,7 @@ class HistoryActivity : AppCompatActivity() {
 
 
     }
-    open fun replaceFragments(fragmentName:String){
+     open fun replaceFragments(fragmentName:String){
         var fragment: Fragment? = null
        when(fragmentName){
            "HistoryFragment" -> fragment = HistoryFragment()

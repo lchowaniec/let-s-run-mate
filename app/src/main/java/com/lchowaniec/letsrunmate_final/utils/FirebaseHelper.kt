@@ -31,14 +31,14 @@ import kotlin.collections.ArrayList
 
 open class FirebaseHelper(context: Context) {
 
-    val mContext = context
-    val mAuth = FirebaseAuth.getInstance()
-    val mFirebaseDatabase = FirebaseDatabase.getInstance()
-    val myRef = mFirebaseDatabase.reference
-    val userID= mAuth.currentUser!!.uid
+    private val mContext = context
+    val mAuth = FirebaseAuth.getInstance()!!!!
+    private val mFirebaseDatabase = FirebaseDatabase.getInstance()
+    private val myRef = mFirebaseDatabase.reference
+    private val userID= mAuth.currentUser!!.uid
     var newActivityKey:String="123"
-    val mStorage = FirebaseStorage.getInstance()
-    val myRefStorage = mStorage.reference
+    private val mStorage = FirebaseStorage.getInstance()
+    private val myRefStorage = mStorage.reference
 
 
 
@@ -56,9 +56,9 @@ open class FirebaseHelper(context: Context) {
 
     open fun UserExistsCheck(username: String,dataSnapshot: DataSnapshot): Boolean {
         val user = User()
-        for (ds: DataSnapshot in dataSnapshot.child(this.userID.toString()).children){
+        for (ds: DataSnapshot in dataSnapshot.child(this.userID).children){
             user.username = ds.getValue(User::class.java)!!.username
-            if(user.username.equals(username)){
+            if(user.username == username){
                 return true
             }
         }
@@ -66,13 +66,13 @@ open class FirebaseHelper(context: Context) {
 
     }
     open fun activityCounter(dataSnapshot: DataSnapshot):Int{
-        var counter:Int =0
+        var counter =0
         for(ds: DataSnapshot in dataSnapshot
             .child(mContext.getString(R.string.firebase_users_activities))
             .child(FirebaseAuth.getInstance().currentUser!!.uid)
             .children){
             counter++
-            Log.d(TAG,"counter: "+counter)
+            Log.d(TAG, "counter: $counter")
 
         }
         return counter
@@ -108,11 +108,11 @@ open class FirebaseHelper(context: Context) {
     }
     open fun allCoordinates(url: String):ArrayList<Point> {
         val ref = URL(url)
-        Log.d(TAG,"allCoordinates URL: "+url)
+        Log.d(TAG, "allCoordinates URL: $url")
 
-        var points: ArrayList<Point> = ArrayList()
-        var x: Int = 1
-        val mIn: BufferedReader = BufferedReader(InputStreamReader(ref.openStream()))
+        val points: ArrayList<Point> = ArrayList()
+        var x = 1
+        val mIn = BufferedReader(InputStreamReader(ref.openStream()))
         val listX: ArrayList<Double> = ArrayList()
         val listY: ArrayList<Double> = ArrayList()
         for (line in mIn.lines()) {
@@ -126,10 +126,10 @@ open class FirebaseHelper(context: Context) {
 
 
         }
-        for (i in 0..listX.size - 1) {
+        for (i in 0 until listX.size) {
             points.add(Point.fromLngLat(listX[i],listY[i]))
         }
-        Log.d(TAG,"allCoordinates: "+listX+listY)
+        Log.d(TAG, "allCoordinates: $listX$listY")
         return points
     }
     open fun addPhoto(file:Uri,key:String){
@@ -180,7 +180,7 @@ open class FirebaseHelper(context: Context) {
             newActivityKey = myRef.child(mContext.getString(R.string.firebase_activities)).push().key.toString()
             val upload_task:UploadTask
             val activity = Activity()
-            var url :String ="123"
+            var url ="123"
             var my_uri:String
 
             val acc_uid = FirebaseAuth.getInstance().currentUser!!.uid
@@ -234,7 +234,7 @@ open class FirebaseHelper(context: Context) {
 
 
     open fun addNewUser(email:String,username: String,descripton: String, profile_photo:String) {
-        val user = User(userID.toString(), email, usernameCheck().changeUsername(username))
+        val user = User(userID, email, usernameCheck().changeUsername(username))
 
         if (userID != null) {
             myRef.child(mContext.getString(firebase_users))
@@ -242,7 +242,7 @@ open class FirebaseHelper(context: Context) {
                 .setValue(user)
         }
 
-        val settings: UserDetails = UserDetails(
+        val settings = UserDetails(
             descripton,
             usernameCheck().changeUsername(username),
             0F,
@@ -252,7 +252,7 @@ open class FirebaseHelper(context: Context) {
             userID
         )
         if (userID != null) {
-            myRef.child(mContext.getString(R.string.firebase_user_details))
+            myRef.child(mContext.getString(firebase_user_details))
                 .child(userID)
                 .setValue(settings)
         }
@@ -260,7 +260,7 @@ open class FirebaseHelper(context: Context) {
 
     open fun getAllActivities(dataSnapshot: DataSnapshot,userID:String):ArrayList<Activity> {
         val array = ArrayList<Activity>()
-        var activity:Activity= Activity()
+        var activity = Activity()
         val ref = mFirebaseDatabase.reference.child(mContext.getString(R.string.firebase_users_activities))
         ref.child(userID).addValueEventListener(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
@@ -339,7 +339,7 @@ open class FirebaseHelper(context: Context) {
 
         //userDetails
         for(ds:DataSnapshot in dataSnapshot.children){
-            if(ds.key.equals(mContext.getString(R.string.firebase_user_details))){
+            if(ds.key.equals(mContext.getString(firebase_user_details))){
                 settings.username =
                 (ds.child(userID)
                     .getValue(UserDetails::class.java)?.username!!

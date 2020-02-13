@@ -17,16 +17,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.lchowaniec.letsrunmate_final.Models.Activity
-import com.lchowaniec.letsrunmate_final.Models.Trophy
 import com.lchowaniec.letsrunmate_final.Post.PostViewFragment
 import com.lchowaniec.letsrunmate_final.R
 import com.lchowaniec.letsrunmate_final.utils.ActivityListAdapter
 import com.lchowaniec.letsrunmate_final.utils.BottomNaviViewHelper
 import com.lchowaniec.letsrunmate_final.utils.FirebaseHelper
 import com.nostra13.universalimageloader.core.ImageLoader
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 /**
  * A simple [Fragment] subclass.
@@ -56,7 +52,7 @@ class HistoryFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        var view =  inflater.inflate(R.layout.fragment_history, container, false)
+        val view =  inflater.inflate(R.layout.fragment_history, container, false)
         mProgressBar = view!!.findViewById(R.id.history_progress_bar)
         mProgressBar.visibility = View.VISIBLE
         mContext = activity!!.applicationContext

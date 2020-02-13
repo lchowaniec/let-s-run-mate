@@ -57,6 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <Button
+                        style="?android:attr/buttonBarButtonStyle"
                         android:id="@+id/basic_run_btn"
                         android:text="@string/basic_run"
                         android:textColor="@color/white"
@@ -67,8 +68,9 @@
                     android:layout_height="50dp"
                     android:background="@drawable/button_start_run"/>
                     <Button
+                        style="?android:attr/buttonBarButtonStyle"
                         android:id="@+id/distance_run_btn"
-                    android:text="Distance run"
+                    android:text="@string/distance_run"
                         android:textColor="@color/white"
                     android:layout_gravity="center"
                     android:layout_marginStart="5dp"
@@ -77,7 +79,8 @@
                     android:layout_height="50dp"
                     android:background="@drawable/button_start_run"/>
                     <Button
-                        android:text="Interval run"
+                        style="?android:attr/buttonBarButtonStyle"
+                        android:text="@string/interval_run"
                         android:textColor="@color/white"
                         android:layout_gravity="center"
                         android:layout_marginStart="5dp"

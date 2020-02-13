@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/history_titlebar"
-            android:text="History"
+            android:text="@string/history"
             android:gravity="center_vertical"
             android:layout_width="325dp"
             android:layout_height="match_parent"

@@ -1,10 +1,9 @@
 package com.lchowaniec.letsrunmate_final.Post
 
 
-import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.os.Bundle
-import android.renderscript.Sampler
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
@@ -15,37 +14,29 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.lchowaniec.letsrunmate_final.Models.Activity
+import com.lchowaniec.letsrunmate_final.Models.User
 import com.lchowaniec.letsrunmate_final.Models.UserDetails
 import com.lchowaniec.letsrunmate_final.R
 import com.lchowaniec.letsrunmate_final.utils.*
-import java.lang.NullPointerException
-import java.lang.StringBuilder
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import android.view.MotionEvent
-import android.view.GestureDetector
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.lchowaniec.letsrunmate_final.Models.User
-import org.w3c.dom.Text
-import com.google.firebase.database.DatabaseError
-import java.nio.file.Files.exists
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.DatabaseReference
-
-
+import kotlin.math.roundToLong
 
 
 /**
  * A simple [Fragment] subclass.
  */
-class PostViewFragment() : Fragment() {
+class PostViewFragment : Fragment() {
     init {
         super.onStart()
         arguments = Bundle()
     }
+    interface CommentListener{
+        fun CommentListener(activity: Activity)
+
+    }
+    private lateinit var mCommentListener: CommentListener
     //fields
     private lateinit var mImage: SquareImageView
     private lateinit var bottomNavigationView:BottomNavigationView
@@ -119,6 +110,16 @@ class PostViewFragment() : Fragment() {
       //  imageFunction()
         return view
     }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        try{
+            mCommentListener = activity as CommentListener
+
+        }catch (e:ClassCastException){
+            e.printStackTrace()
+        }
+    }
   /*  fun imageFunction(){
         mImage.setOnTouchListener(object: View.OnTouchListener{
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
@@ -160,8 +161,7 @@ class PostViewFragment() : Fragment() {
                         val keyID = singleSnapshot.key
 
                         //case1: Then user already liked the photo
-                        if (TrophiedByUser && singleSnapshot.getValue(com.lchowaniec.letsrunmate_final.Models.Trophy::class.java!!)!!.user_id
-                                .equals(FirebaseAuth.getInstance().currentUser!!.uid)
+                        if (TrophiedByUser && singleSnapshot.getValue(com.lchowaniec.letsrunmate_final.Models.Trophy::class.java)!!.user_id == FirebaseAuth.getInstance().currentUser!!.uid
                         ) {
 
                             myRef.child(getString(R.string.firebase_activities))
@@ -221,8 +221,7 @@ class PostViewFragment() : Fragment() {
                         val keyID = singleSnapshot.key
 
                         //case1: Then user already liked the photo
-                        if (TrophiedByUser && singleSnapshot.getValue(com.lchowaniec.letsrunmate_final.Models.Trophy::class.java!!)!!.user_id
-                                .equals(FirebaseAuth.getInstance().currentUser!!.uid)
+                        if (TrophiedByUser && singleSnapshot.getValue(com.lchowaniec.letsrunmate_final.Models.Trophy::class.java)!!.user_id == FirebaseAuth.getInstance().currentUser!!.uid
                         ) {
 
                             myRef.child(getString(R.string.firebase_activities))
@@ -276,7 +275,7 @@ class PostViewFragment() : Fragment() {
             .child(FirebaseAuth.getInstance().currentUser!!.uid)
             .child(mActivity.activity_id)
             .child(getString(R.string.firebase_trophies))
-            .child(trophyID!!)
+            .child(trophyID)
             .setValue(trophy)
 
         mTrophy.throphing()
@@ -370,19 +369,19 @@ class PostViewFragment() : Fragment() {
     private fun getAc(): Activity? {
         Log.d(TAG,"get photo from bundle")
         val bundle = this.arguments
-        if (bundle!=null){
-            return bundle.getParcelable<Activity>("Activity")
+        return if (bundle!=null){
+            bundle.getParcelable("Activity")
         }else{
-            return null
+            null
         }
 
     }private fun getNumber(): Int? {
         Log.d(TAG,"get photo from bundle")
         val bundle = this.arguments
-        if (bundle!=null){
-            return bundle.getInt("Activity_number")
+        return if (bundle!=null){
+            bundle.getInt("Activity_number")
         }else{
-            return 0
+            0
         }
 
     }
@@ -421,7 +420,8 @@ class PostViewFragment() : Fragment() {
 
         try{
             timestamp = format.parse(activity_date)!!
-            difference = Math.round(((today.time.toDouble() - timestamp.time)/1000/60/60/24)).toString()
+            difference = ((today.time.toDouble() - timestamp.time) / 1000 / 60 / 60 / 24).roundToLong()
+                .toString()
             println(difference)
            // difference = getString(Math.round(((today.time.toDouble() - timestamp.time)/1000/60/60/24)).toInt())
 
@@ -434,7 +434,7 @@ class PostViewFragment() : Fragment() {
     private fun setupWidgets(){
         mCaption.text = mActivity.caption
         val timeDifference = getTimestampDiff()
-        if(!timeDifference.equals("0")){
+        if(timeDifference != "0"){
             mTimesTamp.text = timeDifference + getString(R.string.days_ago)
         }else{
             mTimesTamp.text = "TODAY"
@@ -448,7 +448,7 @@ class PostViewFragment() : Fragment() {
 
         }
         mComment.setOnClickListener{
-            
+
         }
         if(TrophiedByUser){
             mTropnyWhite.visibility = View.GONE
@@ -506,13 +506,6 @@ class PostViewFragment() : Fragment() {
             fun onAuthStateChanged(firebaseAuth: FirebaseAuth) {
                 val user: FirebaseUser? = firebaseAuth.currentUser
 
-                if (user != null) {
-                    //User is signed in
-
-                } else {
-                    // User is signed out
-                }
-                // ...
             }
 
 

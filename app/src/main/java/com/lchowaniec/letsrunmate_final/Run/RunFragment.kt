@@ -55,25 +55,25 @@ class RunFragment : Fragment() {
 
     private val PERMISSION_REQUEST = 10
     //file saving
-    lateinit var file_name:String
+    private lateinit var file_name:String
     lateinit var fos:FileOutputStream
     var kcal:Int = 0
     var distance: Float = 0F
     var distance2:Float = 0f
-    lateinit var timer: Chronometer
+    private lateinit var timer: Chronometer
    // lateinit var locationManager: LocationManager
     private var locationGps: Location? = null
     private var lastLocationGps : Location? = null
-    lateinit var pauseButton:Button
-    lateinit var resumeButton: Button
-    lateinit var stopButton: Button
+    private lateinit var pauseButton:Button
+    private lateinit var resumeButton: Button
+    private lateinit var stopButton: Button
     lateinit var distance_run : TextView
-    var pauseOffset:Long = 0
+    private var pauseOffset:Long = 0
     var distance_run_save:Boolean= true
     lateinit var showPace:TextView
     lateinit var showDistance:TextView
     var timeSeconds:Float =0F
-    lateinit var showTime:TextView
+    private lateinit var showTime:TextView
     lateinit var points: ArrayList<com.mapbox.geojson.Point>
     var mIter:Int = 0
 
@@ -152,7 +152,7 @@ class RunFragment : Fragment() {
             timer.base = SystemClock.elapsedRealtime() - pauseOffset
             val key = activityCounter +1
 
-            Log.d("TAG","TEN DZIWNY KLUCZ"+ key)
+            Log.d("TAG", "TEN DZIWNY KLUCZ$key")
 
            // FirebaseHelper(activity!!.applicationContext).sendTrackFile(file_name,uri)
             if(points.size >1110 || distance>10.1){
@@ -210,7 +210,7 @@ class RunFragment : Fragment() {
     }
     private fun getTimeInSeconds():Float{
         timeSeconds = ((SystemClock.elapsedRealtime() - timer.base)/1000).toFloat()
-        Log.d(TAG,"timeSeconds: "+timeSeconds)
+        Log.d(TAG, "timeSeconds: $timeSeconds")
         return timeSeconds
 
     }
@@ -221,12 +221,12 @@ class RunFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun getLocation() {
-        var locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        var hasGps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        var hasNetwork = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+        val locationManager = activity!!.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val hasGps = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        val hasNetwork = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
 
-        if(distance_run_save == true) {
+        if(distance_run_save) {
             if (hasGps || hasNetwork) {
 
                 if (hasGps) {
@@ -245,14 +245,14 @@ class RunFragment : Fragment() {
                                 }
 
                                 if (distance2 < 1.0) {
-                                    if (distance_run_save == true) {
+                                    if (distance_run_save) {
                                         Log.d(TAG, "Jestem w true")
                                         distance += locationGps!!.distanceTo(lastLocationGps) / 1000
                                         distance2 += locationGps!!.distanceTo(lastLocationGps)
                                         points.add(com.mapbox.geojson.Point.fromLngLat(
                                             locationGps!!.longitude,
                                         locationGps!!.latitude))
-                                        Log.d(TAG,"RunFragment points: "+points)
+                                        Log.d(TAG, "RunFragment points: $points")
 
 
                                         // seconds += 3
@@ -262,7 +262,7 @@ class RunFragment : Fragment() {
                                     }
 
                                 } else {
-                                    if (distance_run_save == true) {
+                                    if (distance_run_save) {
                                         Log.d(TAG, "Jestem w true 2")
                                         distance += locationGps!!.distanceTo(lastLocationGps) / 1000
                                         distance_run.text = String.format("%.2f", distance)

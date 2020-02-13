@@ -41,13 +41,11 @@ open class ImageLoader {
             .displayer(FadeInBitmapDisplayer(300))
             .build()
 
-        val configuration: ImageLoaderConfiguration = ImageLoaderConfiguration.Builder(mContext)
+        return ImageLoaderConfiguration.Builder(mContext)
             .defaultDisplayImageOptions(default)
             .memoryCache(WeakMemoryCache())
             .diskCacheSize(100*1024*1024)
             .build()
-
-        return configuration
 
 
     }

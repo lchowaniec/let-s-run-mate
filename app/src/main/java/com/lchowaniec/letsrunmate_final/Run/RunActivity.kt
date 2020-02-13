@@ -24,7 +24,7 @@ class RunActivity: AppCompatActivity(){
 
     var distance: Float = 0F
     var distance2:Float = 0f
-    lateinit var locationManager: LocationManager
+    private lateinit var locationManager: LocationManager
     private var hasGps = false
     private var hasNetwork = false
     private var locationGps: Location? = null

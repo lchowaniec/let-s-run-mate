@@ -16,8 +16,8 @@ class RunActivityController : AppCompatActivity() {
 
 
     }
-    fun setupViewPager(){
-        val adapter: SectionsPageAdapter = SectionsPageAdapter(supportFragmentManager)
+    private fun setupViewPager(){
+        val adapter = SectionsPageAdapter(supportFragmentManager)
         adapter.addFragment(RunFragment())
         adapter.addFragment(MapFragment())
         val viewPager:ViewPager = findViewById(R.id.viewPager)

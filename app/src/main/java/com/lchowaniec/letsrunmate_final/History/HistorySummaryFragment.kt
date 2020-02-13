@@ -37,14 +37,14 @@ import kotlinx.android.synthetic.main.fragment_history_summary.*
  */
 open class HistorySummaryFragment : Fragment(), OnMapReadyCallback {
 
-    lateinit var mPace: TextView
-    lateinit var mKcal: TextView
-    lateinit var mTime: TextView
-    lateinit var mDistance: TextView
+    private lateinit var mPace: TextView
+    private lateinit var mKcal: TextView
+    private lateinit var mTime: TextView
+    private lateinit var mDistance: TextView
     lateinit var mProgressBar:ProgressBar
-    lateinit var mapboxMap: MapboxMap
+    private lateinit var mapboxMap: MapboxMap
     var pointArray:ArrayList<com.mapbox.geojson.Point> = ArrayList()
-    lateinit var mToolbar:androidx.appcompat.widget.Toolbar
+    private lateinit var mToolbar:androidx.appcompat.widget.Toolbar
 
 
     override fun onCreateView(
@@ -81,14 +81,14 @@ open class HistorySummaryFragment : Fragment(), OnMapReadyCallback {
 
         return view
     }
-    private fun setActivityDetails(activity: Activity) {
+    private fun setActivityDetails(mActivity: Activity) {
 
-        val activityDetails = activity
+        val activityDetails = mActivity
         mPace.text = activityDetails.avgPace
         mTime.text = activityDetails.duration_time
         mDistance.text = activityDetails.distance
         mKcal.text = activityDetails.kcal.toString()
-        pointArray = FirebaseHelper(getActivity()!!.applicationContext).allCoordinates(activityDetails.url)
+        pointArray = FirebaseHelper(activity!!.applicationContext).allCoordinates(activityDetails.url)
         mToolbar.title = activityDetails.date
 
     }
@@ -100,7 +100,7 @@ open class HistorySummaryFragment : Fragment(), OnMapReadyCallback {
 
 
             override fun onStyleLoaded(style: Style) {
-                    Log.d(TAG,"NO KURDE ON STYLELOADED JUZ"+pointArray)
+                    Log.d(TAG, "NO KURDE ON STYLELOADED JUZ$pointArray")
                     style.addSource(object : GeoJsonSource("line-source", FeatureCollection.fromFeatures(arrayOf<Feature>(
                         Feature.fromGeometry(
 
@@ -122,8 +122,10 @@ open class HistorySummaryFragment : Fragment(), OnMapReadyCallback {
 
 
                         ))
-                    val locationOne = LatLng(pointArray.get(0).latitude(),pointArray.get(0).longitude())
-                    val locationTwo = LatLng(pointArray.get(pointArray.size-1).latitude(),pointArray.get(pointArray.size-1).longitude())
+                    val locationOne = LatLng(pointArray[0].latitude(), pointArray[0].longitude())
+                    val locationTwo = LatLng(
+                        pointArray[pointArray.size-1].latitude(),
+                        pointArray[pointArray.size-1].longitude())
                     val coordinates = LatLngBounds.Builder()
                         .include(locationOne)
                         .include(locationTwo)

@@ -51,7 +51,7 @@ import java.io.IOException
  */
 class SummaryFragment : Fragment(),OnMapReadyCallback {
 
-    lateinit var mapboxMap: MapboxMap
+    private lateinit var mapboxMap: MapboxMap
 
 
 
@@ -66,17 +66,17 @@ class SummaryFragment : Fragment(),OnMapReadyCallback {
     private lateinit var mAuthListener: FirebaseAuth.AuthStateListener
     private lateinit var mFirebaseHelper: FirebaseHelper
     //tv config
-    lateinit var mPace:TextView
-    lateinit var mKcal:TextView
-    lateinit var mTime:TextView
-    lateinit var mDistance:TextView
+    private lateinit var mPace:TextView
+    private lateinit var mKcal:TextView
+    private lateinit var mTime:TextView
+    private lateinit var mDistance:TextView
     lateinit var key:String
     lateinit var point:String
     var arrayTest:ArrayList<Pair<Double,Double>> = ArrayList()
     var pointArray: ArrayList<Point> = ArrayList()
-    lateinit var mUrl:String
-    lateinit var mProgressBar:ProgressBar
-    lateinit var mMapView:MapView
+    private lateinit var mUrl:String
+    private lateinit var mProgressBar:ProgressBar
+    private lateinit var mMapView:MapView
     lateinit var  mapSnapshotter: MapSnapshotter
 
 
@@ -104,7 +104,7 @@ class SummaryFragment : Fragment(),OnMapReadyCallback {
         mDistance.typeface = myFont
         setupFirebaseAuth()
         //mapbox
-        mMapView = view.findViewById<MapView>(R.id.mapViewSummary)
+        mMapView = view.findViewById(R.id.mapViewSummary)
         mMapView.onCreate(savedInstanceState)
         mMapView.getMapAsync(this)
 
@@ -136,8 +136,8 @@ class SummaryFragment : Fragment(),OnMapReadyCallback {
 
 
             override fun onStyleLoaded(style: Style) {
-                Handler().postDelayed(Runnable {
-                    Log.d(TAG,"NO KURDE ON STYLELOADED JUZ"+pointArray)
+                Handler().postDelayed({
+                    Log.d(TAG, "NO KURDE ON STYLELOADED JUZ$pointArray")
                     style.addSource(object : GeoJsonSource("line-source", FeatureCollection.fromFeatures(arrayOf<Feature>(
                         Feature.fromGeometry(
 
@@ -160,14 +160,16 @@ class SummaryFragment : Fragment(),OnMapReadyCallback {
 
                     ))
 
-                    val locationOne = LatLng(pointArray.get(0).latitude(),pointArray.get(0).longitude())
-                    val locationTwo = LatLng(pointArray.get(pointArray.size-1).latitude(),pointArray.get(pointArray.size-1).longitude())
+                    val locationOne = LatLng(pointArray[0].latitude(), pointArray[0].longitude())
+                    val locationTwo = LatLng(
+                        pointArray[pointArray.size-1].latitude(),
+                        pointArray[pointArray.size-1].longitude())
                     val coordinates = LatLngBounds.Builder()
                         .include(locationOne)
                         .include(locationTwo)
                         .build()
                     mapboxMap.easeCamera(CameraUpdateFactory.newLatLngBounds(coordinates,250),10)
-                    Handler().postDelayed(Runnable {
+                    Handler().postDelayed({
 mapboxMap.snapshot {
     val bitmap = it
 
@@ -246,14 +248,13 @@ mapboxMap.snapshot {
 
     private fun setActivityDetails(activity:Activity ){
 
-        val activityDetails = activity
-        mPace.text = activityDetails.avgPace
-        mKcal.text = activityDetails.caption
-        mTime.text = activityDetails.duration_time
-        mDistance.text = activityDetails.distance
-        mKcal.text = activityDetails.kcal.toString()
-        mUrl = activityDetails.url
-        Log.d(TAG,"TUTAJ TERAZ SPRAWDZAM"+mUrl)
+        mPace.text = activity.avgPace
+        mKcal.text = activity.caption
+        mTime.text = activity.duration_time
+        mDistance.text = activity.distance
+        mKcal.text = activity.kcal.toString()
+        mUrl = activity.url
+        Log.d(TAG, "TUTAJ TERAZ SPRAWDZAM$mUrl")
         if(mUrl =="") {
             myRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(dataSnapshot: DatabaseError) {
@@ -261,7 +262,7 @@ mapboxMap.snapshot {
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                   activity_h = mFirebaseHelper.getActivityDetails(dataSnapshot, activityDetails.activity_id)
+                   activity_h = mFirebaseHelper.getActivityDetails(dataSnapshot, activity.activity_id)
                     setActivityDetails(activity_h)
 
 
@@ -271,7 +272,7 @@ mapboxMap.snapshot {
         }else{
 
             pointArray = mFirebaseHelper.allCoordinates(mUrl)
-            Log.d(TAG,"summaryFragment: "+pointArray)
+            Log.d(TAG, "summaryFragment: $pointArray")
             Mapbox.getInstance(context!!, getString(R.string.mapboxkey))
 
 

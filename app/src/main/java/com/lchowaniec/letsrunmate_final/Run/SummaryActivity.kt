@@ -10,7 +10,7 @@ class SummaryActivity : FragmentActivity() {
 
 
     lateinit var mAuth:FirebaseAuth
-     var key:String? =""
+     private var key:String? =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Mapbox.getInstance(this,getString(R.string.mapboxkey))

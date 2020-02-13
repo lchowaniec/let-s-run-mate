@@ -18,7 +18,6 @@
             android:layout_height="30dp"
             android:fontFamily="@font/bowlby_one_sc"
             android:gravity="center"
-            android:text="12.2"
             android:textColor="@color/black"
             android:textSize="14sp" />
         <LinearLayout
@@ -30,7 +29,6 @@
                 android:layout_height="30dp"
                 android:layout_weight="50"
                 android:gravity="center"
-                android:text="12.2"
                 android:textColor="@color/black"
                 android:textSize="10sp" />
 
@@ -41,7 +39,6 @@
                 android:layout_weight="50"
                 android:fontFamily="@font/paprika"
                 android:gravity="center"
-                android:text="12.2"
                 android:textColor="@color/black"
                 android:textSize="10sp" />
 
@@ -49,7 +46,6 @@
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="10sp"
-                android:text="12.2"
                 android:id="@+id/history_adapter_time"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
@@ -73,7 +69,6 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="28sp"
-            android:text="12.2"
             android:fontFamily="@font/bangers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

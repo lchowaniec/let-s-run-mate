@@ -44,7 +44,7 @@ class RegisterActivity : AppCompatActivity() {
         myRef = mFirebaseDatabase.reference
 
         create_acc_btn.setOnClickListener {
-            var username = reg_username.text.toString().trim()
+            val username = reg_username.text.toString().trim()
             val email = reg_email.text.toString().trim()
             val password = reg_password.text.toString().trim()
             register_user(username, email, password)

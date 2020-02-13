@@ -15,7 +15,7 @@
             android:id="@+id/distance_tv"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:hint="0,0"
+            android:hint="@string/_0_00"
             android:gravity="center"
             android:textSize="50sp"
             android:fontFamily="@font/bangers"
@@ -35,7 +35,7 @@
             android:textSize="22sp"
             android:gravity="center_horizontal"
             android:id="@+id/show_pace"
-            android:hint="--"
+            android:hint="@string/empty"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -54,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/show_pace" />
 
         <TextView
-            android:hint="--"
+            android:hint="@string/empty"
             android:fontFamily="@font/bangers"
             android:textColor="@color/black"
             android:textSize="22sp"
@@ -82,7 +82,7 @@
             app:layout_constraintTop_toBottomOf="@+id/show_kcal" />
 
         <TextView
-            android:hint="--"
+            android:hint="@string/empty"
             android:gravity="center_horizontal"
             android:textSize="22sp"
             android:textColor="@color/black"
