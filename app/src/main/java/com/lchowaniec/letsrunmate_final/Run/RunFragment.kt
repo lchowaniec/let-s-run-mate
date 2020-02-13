@@ -377,7 +377,7 @@ class RunFragment : Fragment() {
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    activityCounter = FirebaseHelper(activity!!.applicationContext).activityCounter(dataSnapshot)
+                   // activityCounter = FirebaseHelper(activity!!.applicationContext).activityCounter(dataSnapshot)
 
 
                 }

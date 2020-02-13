@@ -74,17 +74,25 @@
         android:id="@+id/profile_gridview_rel"
         android:layout_marginBottom="60dp"
         android:layout_below="@id/profile_stats_layout">
-        <GridView
-            android:id="@+id/profile_gridview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:numColumns="1"
-            android:horizontalSpacing="1dp"
-            android:verticalSpacing="1dp"
-            android:gravity="center">
+        <ProgressBar
+            android:layout_centerVertical="true"
+            android:id="@+id/profile_listview_progress_bar"
+            android:visibility="visible"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-        </GridView>
+            <ListView
+                android:id="@+id/profile_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
 
     </RelativeLayout>
     <RelativeLayout

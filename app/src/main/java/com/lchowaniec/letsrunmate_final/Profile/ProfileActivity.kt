@@ -4,9 +4,23 @@ import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
+import com.lchowaniec.letsrunmate_final.Models.Activity
+import com.lchowaniec.letsrunmate_final.Post.CommentsViewFragment
+import com.lchowaniec.letsrunmate_final.Post.PostViewFragment
 import com.lchowaniec.letsrunmate_final.R
 
-class ProfileActivity : AppCompatActivity() {
+class ProfileActivity : AppCompatActivity(), PostViewFragment.CommentListener {
+    override fun CommentListener(activity: Activity) {
+        val fragment = CommentsViewFragment()
+        val args = Bundle()
+        args.putSerializable("Activity",activity)
+        fragment.arguments = args
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.container_profile,fragment)
+        transaction.addToBackStack(getString(R.string.comments_view_fragment))
+        transaction.commit()
+    }
+
     private var ACTIVITY_NUM = 4
     private lateinit var imageProfile: ImageView
 
@@ -32,7 +46,7 @@ class ProfileActivity : AppCompatActivity() {
         val fragment = ProfileFragment()
         val transaction: FragmentTransaction =
             this.supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container, fragment)
+        transaction.replace(R.id.container_profile, fragment)
         transaction.commit()
 
 

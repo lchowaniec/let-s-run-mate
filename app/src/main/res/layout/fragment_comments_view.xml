@@ -1,19 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout1">
+        android:id="@+id/layoutAll">
         <include layout="@layout/snippet_comment_toolbar" android:id="@+id/comment_toolbar"/>
 
     </RelativeLayout>
     <RelativeLayout
+        android:background="@drawable/grey_bot"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:id="@+id/comment_first"
+        android:layout_below="@id/layoutAll">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/comment_circleView"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_margin="10dp"
+                app:civ_border_color="@color/black"
+                app:civ_border_width="0.5dp" />
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/comment_circleView"
+                android:background="@color/white">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginBottom="30dp">
+
+                    <TextView
+                        android:id="@+id/comment_username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="lukibzdziuki"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/comment_comment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="40dp"
+                        android:layout_toEndOf="@id/comment_username"
+                        android:text="comment here"
+                        android:textColor="@color/black"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/comment_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/comment_comment"
+                        android:layout_marginStart="10dp"
+                        android:text="5 days ago"
+                        android:textColor="@color/grey"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+
+
+
+                </RelativeLayout>
+
+
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="60dp"
-        android:layout_below="@id/relativeLayout1"
+        android:layout_below="@id/comment_first"
         android:id="@+id/relativeLayout2">
         <ListView
             android:layout_width="match_parent"
@@ -39,6 +118,7 @@
             android:layout_centerVertical="true"
             android:importantForAutofill="no" />
         <TextView
+            android:id="@+id/comment_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/send"

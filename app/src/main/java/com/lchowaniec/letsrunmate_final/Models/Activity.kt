@@ -18,7 +18,8 @@ open class Activity(): Serializable, Parcelable {
     var url: String = ""
     var kcal:Int = 0
     var url_photo:String  =""
-    private var trophies: HashMap<String,Trophy> = HashMap()
+    var trophies: HashMap<String,Trophy> = HashMap()
+    var comments: HashMap<String,Comment> = HashMap()
 
 
 
@@ -37,12 +38,12 @@ open class Activity(): Serializable, Parcelable {
         parcel.writeString(kcal.toString())
         parcel.writeString(url_photo)
         parcel.writeMap(trophies.toMap())
-
+        parcel.writeMap(comments.toMap())
 
     }
-
-
-    constructor(date:String,duration_time:String,caption:String,activity_id:String,user_id:String,distance:String,avgPace:String,points:ArrayList<Point>,url:String,kcal:Int,url_photo:String,trophies:HashMap<String,Trophy>) :this(){
+    constructor(date:String,duration_time:String,caption:String,activity_id:String,user_id:String,distance:String,
+                avgPace:String,points:ArrayList<Point>,url:String,kcal:Int,url_photo:String,
+                trophies:HashMap<String,Trophy>,comments:HashMap<String,Comment>) :this(){
         this.date = date
         this.duration_time = duration_time
         this.caption = caption
@@ -55,6 +56,7 @@ open class Activity(): Serializable, Parcelable {
         this.kcal = kcal
         this.url_photo = url_photo
         this.trophies = trophies
+        this.comments = comments
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
