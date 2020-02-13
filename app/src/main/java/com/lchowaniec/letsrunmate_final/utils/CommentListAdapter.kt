@@ -29,13 +29,6 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
     private val mContext:Context = context
 
 
-
-
-
-
-
-
-
     inner class ViewHolder{
         lateinit var comment:TextView
         lateinit var username:TextView
@@ -49,7 +42,7 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var viewHolder = ViewHolder()
         val retView:View?
-        if(convertView==null){
+
             val inflater = LayoutInflater.from(context)
 
             retView = inflater.inflate(layoutResource,parent,false)
@@ -60,11 +53,11 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
             viewHolder.timestamp = retView.findViewById(R.id.comment_date)
             viewHolder.reply = retView.findViewById(R.id.comment_reply)
             viewHolder.profileImage = retView.findViewById(R.id.comment_circleView)
+            viewHolder.trophies = retView.findViewById(R.id.comment_like_counter)
             viewHolder.imageTrophy = retView.findViewById(R.id.comment_trophy)
             retView.tag = viewHolder
-        }else{
-            retView = convertView
-        }
+        
+
 
         viewHolder.comment.text = getItem(position)!!.comment
         val difference = getTimestampDiff(getItem(position)!!)
@@ -96,13 +89,6 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
             }
 
         })
-
-
-
-
-
-
-
 
 
 

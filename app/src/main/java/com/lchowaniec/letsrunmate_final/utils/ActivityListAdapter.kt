@@ -24,12 +24,6 @@ class ActivityListAdapter(context: Context, resource: Int, objects: MutableList<
             val time = getItem(position)!!.duration_time
             val pace = getItem(position)!!.avgPace
 
-//            val activity = Activity()
-//            activity.distance = distance
-//            activity.duration_time = time
-//            activity.kcal = kcal
-//            activity.date = date
-//            activity.avgPace = pace
             val inflater = LayoutInflater.from(context)
             retView = inflater.inflate(mResource,parent,false)
             val  mDistance = retView.findViewById<TextView>(R.id.history_adapter_distance)

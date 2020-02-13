@@ -4,10 +4,10 @@ open class Comment (){
 
     var comment:String=""
     var user_id:String=""
-    private var trophies: HashMap<String,Trophy> = HashMap()
+    var trophies: List<Trophy> =ArrayList()
     var date:String =""
 
-    constructor(comment:String,user_id:String,trophies:HashMap<String,Trophy>,date:String):this(){
+    constructor(comment:String,user_id:String,trophies:ArrayList<Trophy>,date:String):this(){
         this.comment = comment
         this.date = date
         this.trophies = trophies

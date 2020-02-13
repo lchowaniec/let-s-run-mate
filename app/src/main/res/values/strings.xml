@@ -50,6 +50,7 @@
     <string name="firebase_url">url</string>
     <string name="firebase_kcal">kcal</string>
     <string name="firebase_url_photo">url_photo</string>
+    <string name="firebase_comments">comments</string>
 
     <!-- Names -->
     <string name="activity_path" />
@@ -83,6 +84,7 @@
     <string name="no_back_to_run">No, back to run</string>
     <string name="log_out">Log out</string>
     <string name="empty">--</string>
+    <string name="comments_view_fragment">CommentsViewFragment</string>
 
 
 </resources>

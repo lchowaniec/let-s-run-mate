@@ -1,100 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
+    android:id="@+id/comment_allview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/comment_circleView"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="10dp"
+        android:src="@drawable/mapbox_marker_icon_default"
         app:civ_border_color="@color/black"
-        app:civ_border_width="0.5dp"
-        android:src="@drawable/mapbox_marker_icon_default"/>
+        app:civ_border_width="0.5dp" />
+
     <RelativeLayout
+        android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout1"
+        android:layout_marginTop="10dp"
         android:layout_toEndOf="@id/comment_circleView"
-        android:background="@drawable/grey_bot"
-        android:layout_marginTop="10dp">
+        android:background="@color/white">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="30dp">
+
             <TextView
+                android:id="@+id/comment_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="lukibzdziuki"
-                android:id="@+id/comment_username"
                 android:layout_marginStart="10dp"
-                android:textSize="15sp"
+                android:text="lukibzdziuki"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/comment_comment"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="comment here"
-                android:textSize="14sp"
-                android:textColor="@color/black"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="40dp"
                 android:layout_toEndOf="@id/comment_username"
-                android:layout_marginStart="10dp"/>
+                android:text="comment here"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
             <TextView
                 android:id="@+id/comment_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="5 days ago"
-                android:textStyle="bold"
-                android:textSize="14sp"
-                android:textColor="@color/grey"
                 android:layout_below="@id/comment_comment"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginStart="10dp"
+                android:text="5 days ago"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/comment_like_counter"
                 android:layout_width="wrap_content"
-                android:textStyle="bold"
                 android:layout_height="wrap_content"
-                android:text="12 likes"
-                android:textSize="14sp"
-                android:textColor="@color/grey"
-                android:layout_toEndOf="@id/comment_date"
                 android:layout_below="@id/comment_comment"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/comment_date"
+                android:text="12 likes"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/comment_reply"
                 android:layout_width="wrap_content"
-                android:textStyle="bold"
                 android:layout_height="wrap_content"
-                android:text="@string/reply"
-                android:textSize="14sp"
-                android:textColor="@color/grey"
-                android:layout_toEndOf="@id/comment_like_counter"
                 android:layout_below="@id/comment_comment"
-                android:layout_marginStart="10dp"/>
-
-
-
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@id/comment_like_counter"
+                android:text="@string/reply"
+                android:textColor="@color/grey"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
 
         </RelativeLayout>
 
         <ImageView
+            android:id="@+id/comment_trophy"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:id="@+id/comment_trophy"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             android:scaleType="center"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_cup_unclicked"/>
-
-
-
+            android:src="@drawable/ic_cup_unclicked" />
 
 
     </RelativeLayout>

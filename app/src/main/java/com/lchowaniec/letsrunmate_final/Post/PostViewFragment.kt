@@ -27,7 +27,7 @@ import kotlin.math.roundToLong
 /**
  * A simple [Fragment] subclass.
  */
-class PostViewFragment : Fragment() {
+class PostViewFragment : Fragment(){
     init {
         super.onStart()
         arguments = Bundle()
@@ -62,8 +62,10 @@ class PostViewFragment : Fragment() {
     private var TrophiedByUser: Boolean = false
     lateinit var stringUsers:StringBuilder
     lateinit var mTrophyString:String
+    lateinit var mCommentString:TextView
 
     lateinit var mTrophy: Trophy
+    private lateinit var mActivityID:String
 
     //FIREBASE CONFIG
     private lateinit var mAuth: FirebaseAuth
@@ -87,6 +89,8 @@ class PostViewFragment : Fragment() {
         mProfileImage = view.findViewById(R.id.post_profile_photo)
         mLikeDesc = view.findViewById(R.id.post_like_desc)
         mComment = view.findViewById(R.id.post_comment)
+        mCommentString = view.findViewById(R.id.post_comments)
+
 
 
         mTrophy = Trophy(mTropnyWhite,mTrophyGold)
@@ -96,14 +100,32 @@ class PostViewFragment : Fragment() {
 
 
     try{
-        mActivity = getAc()!!
-        ImageLoader().setImage(mActivity.url_photo,mImage,null,"")
         mActivityNumber = getNumber()!!
+        mActivity = getAc()!!
+        mActivityID = getAc()!!.activity_id
         getActivityUserDetails()
         getTrophyString()
+
+        val query = FirebaseDatabase.getInstance().reference
+            .child(getString((R.string.firebase_activities)))
+            .orderByChild(getString(R.string.firebase_activity_id))
+            .equalTo(mActivityID)
+        query.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    val lActivity = ds.getValue(Activity::class.java)!!
+                    mActivity = lActivity
+                }
+            }
+        })
     }catch (e:NullPointerException){
         Log.e(TAG,"OnCreateView:NullPointerException" +e.message)
     }
+        ImageLoader().setImage(mActivity.url_photo,mImage,null,"")
         setupFirebaseAuth()
         setupBottomNavigationBar()
       //  trophyFunction()
@@ -120,29 +142,7 @@ class PostViewFragment : Fragment() {
             e.printStackTrace()
         }
     }
-  /*  fun imageFunction(){
-        mImage.setOnTouchListener(object: View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                return mGesture2.onTouchEvent(event)
-            }
 
-        })
-    }
-    fun trophyFunction(){
-        mTrophyGold.setOnTouchListener(object: View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                    return mGesture.onTouchEvent(event)            }
-
-        })
-        mTropnyWhite.setOnTouchListener(object : View.OnTouchListener{
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                    return mGesture.onTouchEvent(event)
-            }
-
-
-        })
-
-    }*/
 
     inner class GestureListener2 : GestureDetector.SimpleOnGestureListener() {
         override fun onDown(e: MotionEvent): Boolean {
@@ -432,6 +432,7 @@ class PostViewFragment : Fragment() {
 
     }
     private fun setupWidgets(){
+        getActivityUserDetails()
         mCaption.text = mActivity.caption
         val timeDifference = getTimestampDiff()
         if(timeDifference != "0"){
@@ -442,12 +443,20 @@ class PostViewFragment : Fragment() {
         ImageLoader().setImage(mUserDetails.profile_photo,mProfileImage,null,"")
         mUsername.text = mUserDetails.username
         mLikeDesc.text = mTrophyString
+        if(mActivity.comments.size>0){
+            mCommentString.text = "View all ${mActivity.comments.size} comments"
+
+        }else{
+            mCommentString.text = "No comments"
+
+        }
 
         mBackArrow.setOnClickListener {
             activity!!.supportFragmentManager.popBackStack()
 
         }
         mComment.setOnClickListener{
+            mCommentListener.CommentListener(mActivity)
 
         }
         if(TrophiedByUser){
@@ -501,6 +510,32 @@ class PostViewFragment : Fragment() {
         mFirebaseDatabase = FirebaseDatabase.getInstance()
         myRef = mFirebaseDatabase.reference
         mFirebaseHelper = FirebaseHelper(activity!!.applicationContext)
+        myRef.addValueEventListener(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if(mActivity.comments.size>0){
+                    mCommentString.text = "View all ${mActivity.comments.size} comments"
+
+                }else{
+                    mCommentString.text = "No comments"
+
+                }
+
+
+
+
+
+
+
+
+
+            }
+
+
+        })
 
         mAuthListener = FirebaseAuth.AuthStateListener {
             fun onAuthStateChanged(firebaseAuth: FirebaseAuth) {

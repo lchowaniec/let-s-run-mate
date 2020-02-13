@@ -7,18 +7,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toolbar
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.lchowaniec.letsrunmate_final.Models.Activity
 import com.lchowaniec.letsrunmate_final.Models.User
 import com.lchowaniec.letsrunmate_final.Models.UserAllDetails
+import com.lchowaniec.letsrunmate_final.Post.PostViewFragment
 import com.lchowaniec.letsrunmate_final.R
+import com.lchowaniec.letsrunmate_final.utils.ActivityListAdapter
 import com.lchowaniec.letsrunmate_final.utils.BottomNaviViewHelper
 import com.lchowaniec.letsrunmate_final.utils.FirebaseHelper
 import com.lchowaniec.letsrunmate_final.utils.ImageLoader
@@ -46,6 +46,13 @@ class ProfileFragment : Fragment() {
     private lateinit var myRef:DatabaseReference
     private lateinit var mAuthListener:FirebaseAuth.AuthStateListener
     private lateinit var mFirebaseHelper: FirebaseHelper
+    //Adapter
+    private var adapterList: ArrayList<Activity> = ArrayList()
+    private lateinit var mListView: ListView
+    private lateinit var adapter: ActivityListAdapter
+    private lateinit var mProgressBarListView: ProgressBar
+
+
 
 
     override fun onCreateView(
@@ -62,11 +69,15 @@ class ProfileFragment : Fragment() {
         mFriends = view.findViewById(R.id.show_friends)
 
 
+        mProgressBarListView = view.findViewById(R.id.profile_listview_progress_bar)
         progressBar = view.findViewById(R.id.profile_progress_bar)
         profile_menu = view.findViewById(R.id.profile_menu)
         profile_photo = view.findViewById(R.id.edit_profile_photo)
         progressBar.visibility= View.GONE
         mContext = activity
+        adapterList = ArrayList()
+
+
 
 
         mFirebaseHelper = FirebaseHelper(activity!!.baseContext)
@@ -74,10 +85,35 @@ class ProfileFragment : Fragment() {
 
         setupBottomNavigationBar()
         setupFirebaseAuth()
+
+
+        mListView = view.findViewById(R.id.profile_listview)
+        adapter = ActivityListAdapter(activity!!.applicationContext,R.layout.history_adapter_listview_layout,adapterList)
+        mListView.adapter =adapter
+
+
         profile_menu.setOnClickListener {
             val intent = Intent(mContext,AccountSettingsActivity::class.java)
             startActivity(intent)
 
+        }
+
+        mListView.onItemClickListener = object : AdapterView.OnItemClickListener{
+            override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val newFragment = PostViewFragment()
+                val bundle = Bundle()
+                println(adapter.getItem(position))
+                bundle.putSerializable("Activity",adapter.getItem(position))
+                bundle.putInt("Activity_number",ACTIVITY_NUM)
+                newFragment.arguments = bundle
+
+                val transaction = activity!!.supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.container_profile,newFragment)
+                    addToBackStack(null)
+
+                }
+                transaction.commit()
+            }
         }
         return view
 
@@ -118,6 +154,31 @@ class ProfileFragment : Fragment() {
     /* FIREBASE*/
     private fun setupFirebaseAuth(){
         mAuth = FirebaseAuth.getInstance()
+        val myRef2 = mFirebaseDatabase.reference.child(mContext!!.getString(R.string.firebase_users_activities))
+        myRef2.child(mAuth.currentUser!!.uid).addChildEventListener(object: ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                adapterList.add(p0.getValue(Activity::class.java)!!)
+                adapter.notifyDataSetChanged()
+                mProgressBarListView.visibility = View.GONE             }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                adapterList.add(p0.getValue(Activity::class.java)!!)
+                adapter.notifyDataSetChanged()
+                mProgressBarListView.visibility = View.GONE                }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        })
+
 
         mAuthListener = FirebaseAuth.AuthStateListener {
             fun onAuthStateChanged(firebaseAuth: FirebaseAuth) {
