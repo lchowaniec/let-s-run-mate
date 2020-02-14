@@ -58,6 +58,7 @@ class AccountSettingsActivity : AppCompatActivity() {
         pagerAdapter = SectionsStatePagerAdapter(supportFragmentManager)
         pagerAdapter.addFragment(EditProfileFragment(),getString(R.string.edit_profile_fragment))
         pagerAdapter.addFragment(SignOutFragment(),getString(R.string.sign_out_fragment))
+        pagerAdapter.addFragment(SearchFragment(),"Add friends")
 
     }
     private fun setViewPager(fragmentNumber: Int){
