@@ -85,6 +85,7 @@
     <string name="log_out">Log out</string>
     <string name="empty">--</string>
     <string name="comments_view_fragment">CommentsViewFragment</string>
+    <string name="comments_id" />
 
 
 </resources>

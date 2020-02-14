@@ -6,6 +6,7 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import com.lchowaniec.letsrunmate_final.Models.UserDetails
 import com.lchowaniec.letsrunmate_final.R
 import com.lchowaniec.letsrunmate_final.utils.CommentListAdapter
 import com.lchowaniec.letsrunmate_final.utils.FirebaseHelper
+import com.lchowaniec.letsrunmate_final.utils.Trophy
 import com.nostra13.universalimageloader.core.ImageLoader
 import de.hdodenhof.circleimageview.CircleImageView
 import java.text.ParseException
@@ -39,6 +41,7 @@ class CommentsViewFragment : Fragment() {
         arguments = Bundle()
     }
 
+    // TODO 1: MULTIPLE TROPHIES
     //fields
     private lateinit var mBackArrow: ImageView
     private lateinit var mSend:TextView
@@ -48,11 +51,17 @@ class CommentsViewFragment : Fragment() {
     private lateinit var firstDate:TextView
     private lateinit var firstPhoto:CircleImageView
     private lateinit var firstUsername:TextView
+    private lateinit var mTrophyGold:ImageView
+    private lateinit var mTropnyWhite:ImageView
+    private var TrophiedByUser: Boolean = false
+
 
     //vars
     private lateinit var mActivity: Activity
     private lateinit var mActivityID:String
     private lateinit var mContext: Context
+    lateinit var mTrophy: Trophy
+
 
     //FIREBASE CONFIG
     private lateinit var mAuth: FirebaseAuth
@@ -63,6 +72,7 @@ class CommentsViewFragment : Fragment() {
 
     private var mCommentList :ArrayList<Comment> = ArrayList()
     private lateinit var mCommentAdapter: CommentListAdapter
+    private lateinit var mGesture:GestureDetector
 
 
     override fun onCreateView(
@@ -85,10 +95,17 @@ class CommentsViewFragment : Fragment() {
 
 
 
+
+
+
+
+
+
         try{
             mActivity = getActivityFromBundle()!!
             mActivityID = mActivity.activity_id
             setupFirebaseAuth()
+
 
 
         }catch (e:NullPointerException){
@@ -137,6 +154,8 @@ class CommentsViewFragment : Fragment() {
        // mCommentAdapter = CommentListAdapter(activity!!.applicationContext,R.layout.layout_comment,mCommentList)
         mListView.adapter = mCommentAdapter
         setupFirst()
+
+
         mBackArrow.setOnClickListener{
             activity!!.supportFragmentManager.popBackStack()
         }
@@ -150,6 +169,72 @@ class CommentsViewFragment : Fragment() {
             }else{
                 Toast.makeText(mContext,"Comment is empty :(",Toast.LENGTH_SHORT).show()
             }
+
+
+            mListView.setOnItemClickListener(object: AdapterView.OnItemClickListener{
+                override fun onItemClick(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    Log.d(TAG,"JESTEM TUTAJ W ONCLICK")
+                    val mComment = mListView.getItemAtPosition(position) as Comment
+                    val reference = FirebaseDatabase.getInstance().reference
+                    val query = reference
+                        .child(getString(R.string.firebase_activities))
+                        .child(mActivity.activity_id)
+                        .child(getString(R.string.firebase_comments))
+                        .child(mComment.commentId)
+                    query.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            for (singleSnapshot in dataSnapshot.children) {
+
+
+                                val keyID = singleSnapshot.key
+
+                                //case1: Then user already liked the photo
+                                if (TrophiedByUser && singleSnapshot.getValue(com.lchowaniec.letsrunmate_final.Models.Trophy::class.java)!!.user_id == FirebaseAuth.getInstance().currentUser!!.uid
+                                ) {
+
+                                    myRef.child(getString(R.string.firebase_activities))
+                                        .child(mActivity.activity_id)
+                                        .child(getString(R.string.firebase_comments))
+                                        .child(mComment.commentId)
+                                        .child(getString(R.string.firebase_trophies))
+                                        .child(keyID!!)
+                                        .removeValue()
+                                    myRef.child(getString(R.string.firebase_users_activities))
+                                        .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                                        .child(mActivity.activity_id)
+                                        .child(getString(R.string.firebase_comments))
+                                        .child(mComment.commentId)
+                                        .child(getString(R.string.firebase_trophies))
+                                        .child(keyID!!)
+                                        .removeValue()
+
+
+                                    mTrophy.throphing()
+                                } else if (!TrophiedByUser) {
+                                    //add new like
+                                    addNewLike(mComment)
+                                    break
+                                }//case2: The user has not liked the photo
+                            }
+                            if (!dataSnapshot.exists()) {
+                                //add new like
+                                addNewLike(mComment)
+                            }
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+
+                        }
+                    })
+                }
+            })
+
+
         }
 
     } private fun getTimestampDiff(activity: Activity):String{
@@ -185,6 +270,9 @@ class CommentsViewFragment : Fragment() {
     }
 
 
+
+
+
     private fun getActivityFromBundle(): Activity? {
         Log.d(ContentValues.TAG, "get activity from bundle"+arguments)
         val bundle = this.arguments
@@ -194,10 +282,35 @@ class CommentsViewFragment : Fragment() {
             null
         }
     }
+    private fun addNewLike(comment:Comment){
+        val trophyID = myRef.push().key
+        val commentID =comment.commentId
+        val trophy = com.lchowaniec.letsrunmate_final.Models.Trophy()
+        trophy.user_id = FirebaseAuth.getInstance().currentUser!!.uid
+        myRef.child(getString(R.string.firebase_activities))
+            .child(mActivity.activity_id)
+            .child(getString(R.string.firebase_comments))
+            .child(commentID)
+            .child(getString(R.string.firebase_trophies))
+            .child(trophyID!!)
+            .setValue(trophy)
+        myRef.child(getString(R.string.firebase_users_activities))
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .child(mActivity.activity_id)
+            .child(getString(R.string.firebase_comments))
+            .child(commentID)
+            .child(getString(R.string.firebase_trophies))
+            .child(trophyID!!)
+            .setValue(trophy)
+
+
+
+    }
     private fun addComment(newComment:String){
         val commentID = myRef.push().key!!
         val comment = Comment()
         comment.comment = newComment
+        comment.commentId = commentID
         comment.date = FirebaseHelper(mContext).getTime()
         comment.user_id = FirebaseAuth.getInstance().currentUser!!.uid
         myRef.child(mContext.getString(R.string.firebase_activities))
@@ -272,19 +385,33 @@ class CommentsViewFragment : Fragment() {
                 }
 
                 override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                    mCommentList.add(p0.getValue(Comment::class.java)!!)
-                    mCommentAdapter.notifyDataSetChanged()
+
+                    if(!mCommentList.contains(p0.getValue(Comment::class.java)!!)){
+                        Log.d(TAG,"TUTAJ DODAJE" + mCommentList+p0.getValue(Comment::class.java)!!)
+
+                        mCommentList.add(p0.getValue(Comment::class.java)!!)
+                        mCommentAdapter.notifyDataSetChanged()
+                    }
+
+
+
                 }
 
                 override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                    mCommentList.add(p0.getValue(Comment::class.java)!!)
-                    mCommentAdapter.notifyDataSetChanged()                }
+                    if(!mCommentList.contains(p0.getValue(Comment::class.java)!!)){
+                        Log.d(TAG,"TUTAJ DODAJE 2")
+
+                        mCommentList.add(p0.getValue(Comment::class.java)!!)
+                        mCommentAdapter.notifyDataSetChanged()
+                    }              }
 
                 override fun onChildRemoved(p0: DataSnapshot) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
             })
+
     }
+
 
 
 
