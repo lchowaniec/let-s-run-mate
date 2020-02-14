@@ -168,7 +168,6 @@ class ProfileFragment : Fragment() {
                 adapterList.add(p0.getValue(Activity::class.java)!!)
                 adapter.notifyDataSetChanged()
                 mProgressBarListView.visibility = View.GONE             }
-
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                 adapterList.add(p0.getValue(Activity::class.java)!!)
                 adapter.notifyDataSetChanged()

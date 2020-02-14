@@ -86,6 +86,7 @@
     <string name="empty">--</string>
     <string name="comments_view_fragment">CommentsViewFragment</string>
     <string name="search">Search...</string>
+    <string name="comments_id" />
 
 
 </resources>
