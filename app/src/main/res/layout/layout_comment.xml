@@ -90,7 +90,7 @@
         </RelativeLayout>
 
         <ImageView
-            android:id="@+id/comment_trophy"
+            android:id="@+id/comment_trophy_unclicked"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentEnd="true"
@@ -98,6 +98,15 @@
             android:layout_marginEnd="10dp"
             android:scaleType="center"
             android:src="@drawable/ic_cup_unclicked" />
+        <ImageView
+            android:id="@+id/comment_trophy_clicked"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:scaleType="center"
+            android:src="@drawable/trophy_icon_clicked" />
 
 
     </RelativeLayout>
