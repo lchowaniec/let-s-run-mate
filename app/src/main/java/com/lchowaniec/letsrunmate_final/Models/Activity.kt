@@ -8,7 +8,7 @@ import java.io.Serializable
 open class Activity(): Serializable, Parcelable {
     var date:String =""
     var duration_time:String =""
-    var distance:String=""
+    var distance:Float=0f
     //var image_path:String = ""
     var caption:String=""
     var activity_id:String=""
@@ -29,7 +29,7 @@ open class Activity(): Serializable, Parcelable {
     constructor(parcel: Parcel) : this() {
         parcel.writeString(date)
         parcel.writeString(duration_time)
-        parcel.writeString(distance)
+        parcel.writeFloat(distance)
         parcel.writeString(caption)
         parcel.writeString(activity_id)
         parcel.writeString(user_id)
@@ -41,7 +41,7 @@ open class Activity(): Serializable, Parcelable {
         parcel.writeMap(comments.toMap())
 
     }
-    constructor(date:String,duration_time:String,caption:String,activity_id:String,user_id:String,distance:String,
+    constructor(date:String,duration_time:String,caption:String,activity_id:String,user_id:String,distance:Float,
                 avgPace:String,points:ArrayList<Point>,url:String,kcal:Int,url_photo:String,
                 trophies:HashMap<String,Trophy>,comments:HashMap<String,Comment>) :this(){
         this.date = date
@@ -62,7 +62,7 @@ open class Activity(): Serializable, Parcelable {
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(date)
         parcel.writeString(duration_time)
-        parcel.writeString(distance)
+        parcel.writeFloat(distance)
         parcel.writeString(caption)
         parcel.writeString(activity_id)
         parcel.writeString(user_id)

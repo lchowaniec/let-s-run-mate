@@ -12,7 +12,7 @@ import com.lchowaniec.letsrunmate_final.Post.PostViewFragment
 import com.lchowaniec.letsrunmate_final.R
 import com.lchowaniec.letsrunmate_final.utils.ProfileViewFragment
 
-class ProfileActivity : AppCompatActivity(), PostViewFragment.CommentListener {
+class ProfileActivity : AppCompatActivity(), PostViewFragment.CommentListener{
     override fun CommentListener(activity: Activity) {
         val fragment = CommentsViewFragment()
         val args = Bundle()

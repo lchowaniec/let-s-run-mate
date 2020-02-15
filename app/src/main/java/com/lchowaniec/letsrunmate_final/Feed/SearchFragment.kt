@@ -1,4 +1,4 @@
-package com.lchowaniec.letsrunmate_final.Profile
+package com.lchowaniec.letsrunmate_final.Feed
 
 import android.content.Context
 import android.content.Intent
@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.lchowaniec.letsrunmate_final.Models.User
+import com.lchowaniec.letsrunmate_final.Profile.ProfileActivity
 import com.lchowaniec.letsrunmate_final.R
 import com.lchowaniec.letsrunmate_final.utils.UserListAdapter
 import java.util.*
@@ -100,7 +101,8 @@ class SearchFragment : Fragment() {
         mListView.adapter = mAdapter
         mListView.setOnItemClickListener(object: AdapterView.OnItemClickListener{
             override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val intent = Intent(activity!!.applicationContext,ProfileActivity::class.java)
+                val intent = Intent(activity!!.applicationContext,
+                    ProfileActivity::class.java)
                 intent.putExtra(getString(R.string.calling_activity),getString(R.string.search_activity))
                 intent.putExtra(getString(R.string.user),mListUsers.get(position))
                 startActivity(intent)

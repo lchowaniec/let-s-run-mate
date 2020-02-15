@@ -120,7 +120,7 @@ class CommentsViewFragment : Fragment() {
         val query = reference
             .child(mContext.getString(R.string.firebase_user_details))
             .orderByChild(mContext.getString(R.string.user_id))
-            .equalTo(mAuth.currentUser!!.uid)
+            .equalTo(mActivity.user_id)
         query.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 for (snap in p0.children){
@@ -160,26 +160,29 @@ class CommentsViewFragment : Fragment() {
             activity!!.supportFragmentManager.popBackStack()
         }
 
-        mSend.setOnClickListener{
-            if(mComment.text.toString() != ""){
+        mSend.setOnClickListener {
+            if (mComment.text.toString() != "") {
                 addComment(mComment.text.toString())
                 mComment.setText("")
                 closeKeybord()
 
 
-            }else{
-                Toast.makeText(mContext,"Comment is empty :(",Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(mContext, "Comment is empty :(", Toast.LENGTH_SHORT).show()
             }
+        }
 
 
-            mListView.setOnItemClickListener(object: AdapterView.OnItemClickListener{
+            mListView.setOnItemClickListener(object: AdapterView.OnItemClickListener {
                 override fun onItemClick(
                     parent: AdapterView<*>?,
                     view: View?,
                     position: Int,
                     id: Long
                 ) {
-                    Log.d(TAG,"JESTEM TUTAJ W ONCLICK")
+                    var check = false
+
+                    Log.d(TAG, "JESTEM TUTAJ W ONCLICK")
                     val mComment = mListView.getItemAtPosition(position) as Comment
                     val reference = FirebaseDatabase.getInstance().reference
                     val query = reference
@@ -187,91 +190,59 @@ class CommentsViewFragment : Fragment() {
                         .child(mActivity.activity_id)
                         .child(getString(R.string.firebase_comments))
                         .child(mComment.commentId)
+                        .child(getString(R.string.firebase_trophies))
+                        .orderByChild(getString(R.string.firebase_user_id))
+                        .equalTo(FirebaseAuth.getInstance().currentUser!!.uid)
                     query.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onCancelled(p0: DatabaseError) {
+                            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        }
+
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             for (singleSnapshot in dataSnapshot.children) {
 
 
                                 val keyID = singleSnapshot.key
 
-                                //case1: Then user already liked the photo
-                                if (TrophiedByUser) {
+                                myRef.child(getString(R.string.firebase_activities))
+                                    .child(mActivity.activity_id)
+                                    .child(getString(R.string.firebase_comments))
+                                    .child(mComment.commentId)
+                                    .child(getString(R.string.firebase_trophies))
+                                    .child(keyID!!)
+                                    .removeValue()
+                                myRef.child(getString(R.string.firebase_users_activities))
+                                    .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                                    .child(mActivity.activity_id)
+                                    .child(getString(R.string.firebase_comments))
+                                    .child(mComment.commentId)
+                                    .child(getString(R.string.firebase_trophies))
+                                    .child(keyID!!)
+                                    .removeValue()
+                                check = true
+                                mCommentAdapter.selected = position
+                                mCommentAdapter.notifyDataSetChanged()
 
-                                    myRef.child(getString(R.string.firebase_activities))
-                                        .child(mActivity.activity_id)
-                                        .child(getString(R.string.firebase_comments))
-                                        .child(mComment.commentId)
-                                        .child(getString(R.string.firebase_trophies))
-                                        .child(keyID!!)
-                                        .removeValue()
-                                    myRef.child(getString(R.string.firebase_users_activities))
-                                        .child(FirebaseAuth.getInstance().currentUser!!.uid)
-                                        .child(mActivity.activity_id)
-                                        .child(getString(R.string.firebase_comments))
-                                        .child(mComment.commentId)
-                                        .child(getString(R.string.firebase_trophies))
-                                        .child(keyID!!)
-                                        .removeValue()
 
 
-                                    mTrophy.throphing()
-                                } else if (!TrophiedByUser) {
-                                    //add new like
-                                    addNewLike(mComment)
-                                    break
-                                }//case2: The user has not liked the photo
                             }
-                            if (!dataSnapshot.exists()) {
-                                //add new like
-                                addNewLike(mComment)
+                            if(check == false){
+                            addNewLike(mComment)
+                                mCommentAdapter.selected = position
+                                mCommentAdapter.notifyDataSetChanged()
                             }
-                        }
 
-                        override fun onCancelled(databaseError: DatabaseError) {
+
 
                         }
                     })
+
                 }
             })
-
-
-        }
-
     }
-    private fun setGold(){
-        mTrophyGold.visibility = View.VISIBLE
-        mTropnyWhite.visibility = View.GONE
-    }
-    private fun setWhite(){
-        mTrophyGold.visibility = View.GONE
-        mTropnyWhite.visibility = View.VISIBLE
-    }
-    private fun isTrophied(comment:Comment) {
-        setGold()
-        TrophiedByUser = false
-        val ref = FirebaseDatabase.getInstance().reference
-        val query = ref.child(getString(R.string.firebase_activities))
-            .child(mActivity.activity_id)
-            .child(getString(R.string.firebase_comments))
-            .child(comment.commentId)
-            .child(getString(R.string.firebase_trophies))
-            .orderByChild(getString(R.string.firebase_user_id))
-            .equalTo(FirebaseAuth.getInstance().currentUser!!.uid)
-        query.addListenerForSingleValueEvent(object:ValueEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                for(ds in p0.children){
-                    setGold()
-                    TrophiedByUser =true
-                }
 
-            }
 
-        })
-        }
     private fun getTimestampDiff(activity: Activity):String{
         var difference = ""
         val c = Calendar.getInstance()
@@ -317,7 +288,12 @@ class CommentsViewFragment : Fragment() {
             null
         }
     }
-    private fun addNewLike(comment:Comment){
+    fun addNewLike(comment:Comment){
+
+
+       val  mAuth = FirebaseAuth.getInstance()
+        val mFirebaseDatabase = FirebaseDatabase.getInstance()
+       val  myRef = mFirebaseDatabase.reference
         val trophyID = myRef.push().key
         val commentID =comment.commentId
         val trophy = com.lchowaniec.letsrunmate_final.Models.Trophy()
@@ -330,7 +306,6 @@ class CommentsViewFragment : Fragment() {
             .child(trophyID!!)
             .setValue(trophy)
         myRef.child(getString(R.string.firebase_users_activities))
-            .child(FirebaseAuth.getInstance().currentUser!!.uid)
             .child(mActivity.activity_id)
             .child(getString(R.string.firebase_comments))
             .child(commentID)
@@ -354,7 +329,7 @@ class CommentsViewFragment : Fragment() {
             .child(commentID)
             .setValue(comment)
         myRef.child(mContext.getString(R.string.firebase_users_activities))
-            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .child((mActivity.user_id))
             .child(mActivity.activity_id)
             .child(mContext.getString(R.string.firebase_comments))
             .child(commentID)
@@ -427,12 +402,12 @@ class CommentsViewFragment : Fragment() {
 
                 override fun onChildAdded(p0: DataSnapshot, p1: String?) {
 
-                        Log.d(TAG,"TUTAJ DODAJE 2")
+                    Log.d(TAG, "TUTAJ DODAJE 2")
 
-                        mCommentList.add(p0.getValue(Comment::class.java)!!)
-                        mCommentAdapter.notifyDataSetChanged()
-                        isTrophied(p0.getValue(Comment::class.java)!!)
-                               }
+                    mCommentList.add(p0.getValue(Comment::class.java)!!)
+                    mCommentAdapter.notifyDataSetChanged()
+                }
+
 
                 override fun onChildRemoved(p0: DataSnapshot) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

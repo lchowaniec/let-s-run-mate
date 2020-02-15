@@ -40,6 +40,12 @@ class ProfileFragment : Fragment() {
     private lateinit var profile_menu: ImageView
     private lateinit var profile_photo: CircleImageView
     private lateinit var progressBar:ProgressBar
+    private var mDistanceCounter:Float = 0f
+    private var mActivitiesCounter:Int = 0
+    private var mFriendsFollowingCounter:Int = 0
+    private var mFriendsFollowersCounter:Int = 0
+
+
     //FIREBASE CONFIG
     private lateinit var mAuth:FirebaseAuth
     private lateinit var mFirebaseDatabase: FirebaseDatabase
@@ -87,6 +93,7 @@ class ProfileFragment : Fragment() {
         setupFirebaseAuth()
 
 
+
         mListView = view.findViewById(R.id.profile_listview)
         adapter = ActivityListAdapter(activity!!.applicationContext,R.layout.history_adapter_listview_layout,adapterList)
         mListView.adapter =adapter
@@ -121,6 +128,86 @@ class ProfileFragment : Fragment() {
 
 
 }
+    private fun friendsCounter(){
+        mFriendsFollowingCounter = 0
+        mFriendsFollowersCounter = 0
+        val ref = FirebaseDatabase.getInstance().reference
+        val query = ref.child(getString(R.string.firebase_following))
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+        query.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    mFriendsFollowingCounter++
+                }
+
+            }
+        })
+
+        val ref2 = FirebaseDatabase.getInstance().reference
+        val query2 = ref2.child(getString(R.string.firebase_followers))
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+        query2.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    mFriendsFollowersCounter++
+                }
+                mFriends.text =
+                    "$mFriendsFollowersCounter / $mFriendsFollowingCounter"
+            }
+        })
+
+    }
+    private fun distanceCounter(){
+        mDistanceCounter = 0f
+        val ref = FirebaseDatabase.getInstance().reference
+        val query = ref.child(getString(R.string.firebase_users_activities))
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+        query.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    mDistanceCounter += ds.getValue(Activity::class.java)!!.distance
+                }
+                mDistance.text = String.format("%.2f km", mDistanceCounter )
+
+
+            }
+
+
+        })
+
+
+    }
+    private fun activitiesCounter(){
+        mActivitiesCounter = 0
+        val ref = FirebaseDatabase.getInstance().reference
+        val query = ref.child(getString(R.string.firebase_users_activities))
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+        query.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    mActivitiesCounter++
+                }
+                mActivities.text = mActivitiesCounter.toString()
+            }
+        })
+
+    }
 
 
     private fun setProfileDetails(userAllDetails: UserAllDetails){
@@ -129,9 +216,10 @@ class ProfileFragment : Fragment() {
         val userDetails = userAllDetails.userDetails
         ImageLoader().setImage(userDetails.profile_photo,profile_photo,null,"")
         mUsername.text = user.username
-        mActivities.text = userDetails.activities.toString()
-        mDistance.text = userDetails.distance.toString()
-        mFriends.text = userDetails.friends.toString()
+        friendsCounter()
+        activitiesCounter()
+        distanceCounter()
+
 
 
 

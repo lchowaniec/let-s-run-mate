@@ -251,7 +251,7 @@ mapboxMap.snapshot {
         mPace.text = activity.avgPace
         mKcal.text = activity.caption
         mTime.text = activity.duration_time
-        mDistance.text = activity.distance
+        mDistance.text = String.format("%.2f", activity.distance)
         mKcal.text = activity.kcal.toString()
         mUrl = activity.url
         Log.d(TAG, "TUTAJ TERAZ SPRAWDZAM$mUrl")

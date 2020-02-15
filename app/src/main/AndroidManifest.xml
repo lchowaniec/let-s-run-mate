@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Profile.SearchActivity"></activity>
+        <activity android:name=".Feed.FeedActivity"></activity>
         <activity android:name=".History.HistoryActivity" />
         <activity android:name=".Run.SummaryActivity" />
         <activity android:name=".Run.RunActivityController" />

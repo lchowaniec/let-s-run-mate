@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.lchowaniec.letsrunmate_final.Feed.SearchFragment
 import com.lchowaniec.letsrunmate_final.R
 import com.lchowaniec.letsrunmate_final.utils.BottomNaviViewHelper
 import com.lchowaniec.letsrunmate_final.utils.SectionsStatePagerAdapter

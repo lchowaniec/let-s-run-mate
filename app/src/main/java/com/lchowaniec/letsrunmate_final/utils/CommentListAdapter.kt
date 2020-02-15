@@ -27,6 +27,7 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
     private val mLayoutInflater:LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private val layoutResource:Int = resource
     private val mContext:Context = context
+    var selected:Int =999
 
 
     inner class ViewHolder{
@@ -58,7 +59,10 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
             viewHolder.trophies = retView.findViewById(R.id.comment_like_counter)
             viewHolder.imageTrophyWhite = retView.findViewById(R.id.comment_trophy_unclicked)
             viewHolder.imageTrophyGold = retView.findViewById(R.id.comment_trophy_clicked)
-            retView.tag = viewHolder
+
+
+
+        retView.tag = viewHolder
 
         
 
@@ -84,7 +88,6 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
                         snap.getValue(UserDetails::class.java)!!.profile_photo,
                         viewHolder.profileImage
                     )
-
                 }
             }
 
@@ -93,6 +96,16 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
             }
 
         })
+        if(selected ==position){
+            if(viewHolder.imageTrophyGold.visibility == View.VISIBLE){
+                viewHolder.imageTrophyGold.visibility = View.GONE
+                viewHolder.imageTrophyWhite.visibility = View.VISIBLE
+            }else if(viewHolder.imageTrophyWhite.visibility == View.VISIBLE){
+                viewHolder.imageTrophyGold.visibility == View.VISIBLE
+                viewHolder.imageTrophyGold.visibility == View.GONE
+            }
+
+        }
 
 
 

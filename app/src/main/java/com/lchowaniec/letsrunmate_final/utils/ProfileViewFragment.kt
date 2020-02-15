@@ -24,7 +24,7 @@ import de.hdodenhof.circleimageview.CircleImageView
  * A simple [Fragment] subclass.
  */
 class ProfileViewFragment : Fragment() {
-    private var ACTIVITY_NUM = 4
+    private var ACTIVITY_NUM = 1
     private lateinit var mActivities:TextView
     private lateinit var mDistance:TextView
     private lateinit var mFriends:TextView
@@ -37,6 +37,12 @@ class ProfileViewFragment : Fragment() {
     private lateinit var mUser:User
     private lateinit var addFriend:ImageView
     private lateinit var deleteFriend:ImageView
+    private var mDistanceCounter:Float = 0f
+    private var mActivitiesCounter:Int = 0
+    private var mFriendsFollowingCounter:Int = 0
+    private var mFriendsFollowersCounter:Int = 0
+
+
     //FIREBASE CONFIG
     private lateinit var mAuth:FirebaseAuth
     private lateinit var mFirebaseDatabase: FirebaseDatabase
@@ -84,8 +90,7 @@ class ProfileViewFragment : Fragment() {
 
         try{
             mUser = getUserBundle()!!
-            println(mUser.user_id)
-            println("HALOHALOAHLO")
+
             initUser()
 
         }catch (e:NullPointerException){
@@ -97,11 +102,12 @@ class ProfileViewFragment : Fragment() {
 
         setupBottomNavigationBar()
         setupFirebaseAuth()
+        activitiesCounter()
+        distanceCounter()
+        friendsCounter()
 
 
-        mListView = view.findViewById(R.id.profile_listview)
-        adapter = ActivityListAdapter(activity!!.applicationContext,R.layout.history_adapter_listview_layout,adapterList)
-        mListView.adapter =adapter
+
         addFriend.setOnClickListener{
             FirebaseDatabase.getInstance().reference
                 .child(getString(R.string.firebase_following))
@@ -139,11 +145,21 @@ class ProfileViewFragment : Fragment() {
 
 
 
+        return view
+
+
+
+
+    }
+    private fun adapterInit(){
+        mListView = view!!.findViewById(R.id.profile_listview)
+        adapter = ActivityListAdapter(activity!!.applicationContext,R.layout.history_adapter_listview_layout,adapterList)
+        mListView.adapter =adapter
+
         mListView.onItemClickListener = object : AdapterView.OnItemClickListener{
             override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val newFragment = PostViewFragment()
                 val bundle = Bundle()
-                println(adapter.getItem(position))
                 bundle.putSerializable("Activity",adapter.getItem(position))
                 bundle.putInt("Activity_number",ACTIVITY_NUM)
                 newFragment.arguments = bundle
@@ -156,12 +172,88 @@ class ProfileViewFragment : Fragment() {
                 transaction.commit()
             }
         }
-        return view
+
+    }
+    private fun friendsCounter(){
+        mFriendsFollowingCounter = 0
+        mFriendsFollowersCounter = 0
+        val ref = FirebaseDatabase.getInstance().reference
+        val query = ref.child(getString(R.string.firebase_following))
+            .child(mUser.user_id)
+        query.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    mFriendsFollowingCounter++
+                }
+
+            }
+        })
+
+        val ref2 = FirebaseDatabase.getInstance().reference
+        val query2 = ref2.child(getString(R.string.firebase_followers))
+            .child(mUser.user_id)
+        query2.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    mFriendsFollowersCounter++
+                }
+                mFriends.text =
+                    "$mFriendsFollowersCounter / $mFriendsFollowingCounter"
+            }
+        })
+
+    }
+    private fun distanceCounter(){
+        val ref = FirebaseDatabase.getInstance().reference
+        val query = ref.child(getString(R.string.firebase_users_activities))
+            .child(mUser.user_id)
+        query.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    mDistanceCounter += ds.getValue(Activity::class.java)!!.distance
+                }
+                mDistance.text = String.format("%.2f km", mDistanceCounter )
 
 
+            }
+
+
+        })
 
 
     }
+    private fun activitiesCounter(){
+        Log.d(TAG,"activitiesCounter: "+mUser.user_id)
+        val ref = FirebaseDatabase.getInstance().reference
+        val query = ref.child(getString(R.string.firebase_users_activities))
+            .child(mUser.user_id)
+        query.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    mActivitiesCounter++
+                }
+                mActivities.text = mActivitiesCounter.toString()
+            }
+        })
+
+    }
+
     private fun isFriends(){
         setFriendIcon()
         val ref = FirebaseDatabase.getInstance().reference
@@ -176,6 +268,7 @@ class ProfileViewFragment : Fragment() {
             override fun onDataChange(p0: DataSnapshot) {
                 for(ds in p0.children){
                     setUnFriendIcon()
+                    adapterInit()
                 }
             }
         })
@@ -220,8 +313,7 @@ class ProfileViewFragment : Fragment() {
                     wholeUser.user = mUser
                     wholeUser.userDetails= ds.getValue(UserDetails::class.java)!!
                     setProfileDetails(wholeUser)
-                    println(wholeUser.user.username)
-                    println(wholeUser.userDetails.profile_photo)
+
 
 
                 }
@@ -240,9 +332,7 @@ class ProfileViewFragment : Fragment() {
         val userDetails = userAllDetails.userDetails
         ImageLoader().setImage(userDetails.profile_photo,profile_photo,null,"")
         mUsername.text = user.username
-        mActivities.text = userDetails.activities.toString()
-        mDistance.text = userDetails.distance.toString()
-        mFriends.text = userDetails.friends.toString()
+
 
 
 
