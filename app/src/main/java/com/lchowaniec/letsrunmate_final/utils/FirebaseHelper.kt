@@ -32,7 +32,7 @@ import kotlin.collections.ArrayList
 open class FirebaseHelper(context: Context) {
 
     private val mContext = context
-    val mAuth = FirebaseAuth.getInstance()!!!!
+    val mAuth = FirebaseAuth.getInstance()!!
     private val mFirebaseDatabase = FirebaseDatabase.getInstance()
     private val myRef = mFirebaseDatabase.reference
     private val userID= mAuth.currentUser!!.uid
@@ -89,7 +89,7 @@ open class FirebaseHelper(context: Context) {
     }
 
 
-    open fun uploadUrl(url:String,activity_key: String,distance:String,durationTime:String,avgPace:String){
+    open fun uploadUrl(url:String,activity_key: String,distance:Float,durationTime:String,avgPace:String){
         val activity = Activity()
 
         myRef.child(mContext.getString(R.string.firebase_activities))
@@ -175,7 +175,7 @@ open class FirebaseHelper(context: Context) {
     }
 
 
-        open fun addNewActivity(durationTime:String,distance:String,avgPace:String,file_name:String,file:Uri,kcal:Int): String{
+        open fun addNewActivity(durationTime:String,distance:Float,avgPace:String,file_name:String,file:Uri,kcal:Int): String{
             Log.d(TAG,"Add activity do database")
             newActivityKey = myRef.child(mContext.getString(R.string.firebase_activities)).push().key.toString()
             val upload_task:UploadTask

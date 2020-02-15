@@ -85,6 +85,14 @@
     <string name="log_out">Log out</string>
     <string name="empty">--</string>
     <string name="comments_view_fragment">CommentsViewFragment</string>
+    <string name="search">Search...</string>
+    <string name="comments_id" />
+    <string name="calling_activity">calling_activity</string>
+    <string name="search_activity">SearchActivity</string>
+    <string name="user">user</string>
+    <string name="profile_view_fragment">profile_view_fragment</string>
+    <string name="firebase_following">following</string>
+    <string name="firebase_followers">followers</string>
 
 
 </resources>

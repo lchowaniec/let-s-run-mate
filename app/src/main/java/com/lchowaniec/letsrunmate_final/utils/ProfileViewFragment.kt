@@ -1,9 +1,9 @@
-package com.lchowaniec.letsrunmate_final.Profile
+package com.lchowaniec.letsrunmate_final.utils
 
 
 
+import android.content.ContentValues.TAG
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -11,35 +11,32 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.lchowaniec.letsrunmate_final.Models.Activity
 import com.lchowaniec.letsrunmate_final.Models.User
 import com.lchowaniec.letsrunmate_final.Models.UserAllDetails
+import com.lchowaniec.letsrunmate_final.Models.UserDetails
 import com.lchowaniec.letsrunmate_final.Post.PostViewFragment
 import com.lchowaniec.letsrunmate_final.R
-import com.lchowaniec.letsrunmate_final.utils.ActivityListAdapter
-import com.lchowaniec.letsrunmate_final.utils.BottomNaviViewHelper
-import com.lchowaniec.letsrunmate_final.utils.FirebaseHelper
-import com.lchowaniec.letsrunmate_final.utils.ImageLoader
-import com.nostra13.universalimageloader.core.ImageLoader.TAG
 import de.hdodenhof.circleimageview.CircleImageView
 
 /**
  * A simple [Fragment] subclass.
  */
-class ProfileFragment : Fragment() {
-    private var ACTIVITY_NUM = 4
+class ProfileViewFragment : Fragment() {
+    private var ACTIVITY_NUM = 1
     private lateinit var mActivities:TextView
     private lateinit var mDistance:TextView
     private lateinit var mFriends:TextView
     private lateinit var mUsername:TextView
     private var mContext:Context? = null
     private lateinit var bottomNavigationView: BottomNavigationView
-    private lateinit var mToolbar:Toolbar
     private lateinit var profile_menu: ImageView
     private lateinit var profile_photo: CircleImageView
     private lateinit var progressBar:ProgressBar
+    private lateinit var mUser:User
+    private lateinit var addFriend:ImageView
+    private lateinit var deleteFriend:ImageView
     private var mDistanceCounter:Float = 0f
     private var mActivitiesCounter:Int = 0
     private var mFriendsFollowingCounter:Int = 0
@@ -64,7 +61,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_profile, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_view_profile, container, false)
         mAuth = FirebaseAuth.getInstance()
         mFirebaseDatabase = FirebaseDatabase.getInstance()
         myRef = mFirebaseDatabase.reference
@@ -73,6 +70,8 @@ class ProfileFragment : Fragment() {
         mActivities = view.findViewById(R.id.show_activities)
         mDistance = view.findViewById(R.id.show_distance)
         mFriends = view.findViewById(R.id.show_friends)
+        addFriend = view.findViewById(R.id.view_profile_add)
+        deleteFriend = view.findViewById(R.id.view_profile_delete)
 
 
         mProgressBarListView = view.findViewById(R.id.profile_listview_progress_bar)
@@ -89,27 +88,78 @@ class ProfileFragment : Fragment() {
         mFirebaseHelper = FirebaseHelper(activity!!.baseContext)
 
 
+        try{
+            mUser = getUserBundle()!!
+
+            initUser()
+
+        }catch (e:NullPointerException){
+            Toast.makeText(mContext,"Something gone wrong :/",Toast.LENGTH_SHORT).show()
+            activity!!.supportFragmentManager.popBackStack()
+            Log.d(TAG,e.message)
+        }
+        isFriends()
+
         setupBottomNavigationBar()
         setupFirebaseAuth()
+        activitiesCounter()
+        distanceCounter()
+        friendsCounter()
 
 
 
-        mListView = view.findViewById(R.id.profile_listview)
+        addFriend.setOnClickListener{
+            FirebaseDatabase.getInstance().reference
+                .child(getString(R.string.firebase_following))
+                .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                .child(mUser.user_id)
+                .child(getString(R.string.user_id))
+                .setValue(mUser.user_id)
+            FirebaseDatabase.getInstance().reference
+                .child(getString(R.string.firebase_followers))
+                .child(mUser.user_id)
+                .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                .child(getString(R.string.user_id))
+                .setValue(FirebaseAuth.getInstance().currentUser!!.uid)
+
+
+
+
+
+            setUnFriendIcon()
+        }
+        deleteFriend.setOnClickListener{
+            FirebaseDatabase.getInstance().reference
+                .child(getString(R.string.firebase_following))
+                .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                .child(mUser.user_id)
+                .removeValue()
+            FirebaseDatabase.getInstance().reference
+                .child(getString(R.string.firebase_followers))
+                .child(mUser.user_id)
+                .child(FirebaseAuth.getInstance().currentUser!!.uid)
+                .removeValue()
+
+            setFriendIcon()
+        }
+
+
+
+        return view
+
+
+
+
+    }
+    private fun adapterInit(){
+        mListView = view!!.findViewById(R.id.profile_listview)
         adapter = ActivityListAdapter(activity!!.applicationContext,R.layout.history_adapter_listview_layout,adapterList)
         mListView.adapter =adapter
-
-
-        profile_menu.setOnClickListener {
-            val intent = Intent(mContext,AccountSettingsActivity::class.java)
-            startActivity(intent)
-
-        }
 
         mListView.onItemClickListener = object : AdapterView.OnItemClickListener{
             override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val newFragment = PostViewFragment()
                 val bundle = Bundle()
-                println(adapter.getItem(position))
                 bundle.putSerializable("Activity",adapter.getItem(position))
                 bundle.putInt("Activity_number",ACTIVITY_NUM)
                 newFragment.arguments = bundle
@@ -122,18 +172,14 @@ class ProfileFragment : Fragment() {
                 transaction.commit()
             }
         }
-        return view
 
-
-
-
-}
+    }
     private fun friendsCounter(){
         mFriendsFollowingCounter = 0
         mFriendsFollowersCounter = 0
         val ref = FirebaseDatabase.getInstance().reference
         val query = ref.child(getString(R.string.firebase_following))
-            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .child(mUser.user_id)
         query.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -149,7 +195,7 @@ class ProfileFragment : Fragment() {
 
         val ref2 = FirebaseDatabase.getInstance().reference
         val query2 = ref2.child(getString(R.string.firebase_followers))
-            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .child(mUser.user_id)
         query2.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -166,10 +212,9 @@ class ProfileFragment : Fragment() {
 
     }
     private fun distanceCounter(){
-        mDistanceCounter = 0f
         val ref = FirebaseDatabase.getInstance().reference
         val query = ref.child(getString(R.string.firebase_users_activities))
-            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .child(mUser.user_id)
         query.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -190,10 +235,10 @@ class ProfileFragment : Fragment() {
 
     }
     private fun activitiesCounter(){
-        mActivitiesCounter = 0
+        Log.d(TAG,"activitiesCounter: "+mUser.user_id)
         val ref = FirebaseDatabase.getInstance().reference
         val query = ref.child(getString(R.string.firebase_users_activities))
-            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .child(mUser.user_id)
         query.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -209,16 +254,84 @@ class ProfileFragment : Fragment() {
 
     }
 
+    private fun isFriends(){
+        setFriendIcon()
+        val ref = FirebaseDatabase.getInstance().reference
+        val query = ref.child(getString(R.string.firebase_following))
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .orderByChild(getString(R.string.firebase_user_id)).equalTo(mUser.user_id)
+        query.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    setUnFriendIcon()
+                    adapterInit()
+                }
+            }
+        })
+
+    }
+    private fun setFriendIcon(){
+        addFriend.visibility = View.VISIBLE
+        deleteFriend.visibility = View.GONE
+
+    }
+    private fun setUnFriendIcon(){
+        addFriend.visibility = View.GONE
+        deleteFriend.visibility = View.VISIBLE
+
+    }
+    private fun getUserBundle(): User? {
+        val bundle = this.arguments
+        if(bundle!=null){
+            return bundle.getParcelable(getString(R.string.user))
+
+
+        }else{
+            return null
+        }
+
+    }
+    private fun initUser(){
+        Log.d(TAG,"A TU JESTEM ?"+mUser.user_id)
+        //get data about user from database
+        val reference = FirebaseDatabase.getInstance().reference
+        val query = reference.child(getString(R.string.firebase_user_details))
+            .orderByChild(getString(R.string.firebase_user_id))
+            .equalTo(mUser.user_id)
+        query.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    val wholeUser: UserAllDetails = UserAllDetails()
+                    wholeUser.user = mUser
+                    wholeUser.userDetails= ds.getValue(UserDetails::class.java)!!
+                    setProfileDetails(wholeUser)
+
+
+
+                }
+            }
+        })
+
+
+
+    }
+
 
     private fun setProfileDetails(userAllDetails: UserAllDetails){
+        Log.d(TAG,"JA tu nie wchodze w ogole")
 
         val user:User = userAllDetails.user
         val userDetails = userAllDetails.userDetails
         ImageLoader().setImage(userDetails.profile_photo,profile_photo,null,"")
         mUsername.text = user.username
-        friendsCounter()
-        activitiesCounter()
-        distanceCounter()
 
 
 
@@ -243,7 +356,7 @@ class ProfileFragment : Fragment() {
     private fun setupFirebaseAuth(){
         mAuth = FirebaseAuth.getInstance()
         val myRef2 = mFirebaseDatabase.reference.child(mContext!!.getString(R.string.firebase_users_activities))
-        myRef2.child(mAuth.currentUser!!.uid).addChildEventListener(object: ChildEventListener{
+        myRef2.child(mUser.user_id).addChildEventListener(object: ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -267,51 +380,20 @@ class ProfileFragment : Fragment() {
         })
 
 
-        mAuthListener = FirebaseAuth.AuthStateListener {
-            fun onAuthStateChanged(firebaseAuth: FirebaseAuth) {
-                val user: FirebaseUser? = firebaseAuth.currentUser
-
-                if (user != null) {
-                    //User is signed in
-                    Log.d(TAG,"Signed_in")
-
-                } else {
-                    // User is signed out
-                    Log.d(TAG,"Signed_out")
-                }
-                // ...
-            }
-            myRef.addListenerForSingleValueEvent(object: ValueEventListener{
-                override fun onCancelled(dataSnapshot: DatabaseError) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    setProfileDetails( mFirebaseHelper.getAccountsSettings(dataSnapshot))
 
 
 
-                }
-
-            })
-
-
-
-        }
     }
 
 
     override fun onStart() {
         super.onStart()
-        mAuth.addAuthStateListener(mAuthListener)
     }
 
 
     override fun onStop() {
         super.onStop()
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener)
-        }
+
     }
 
 }

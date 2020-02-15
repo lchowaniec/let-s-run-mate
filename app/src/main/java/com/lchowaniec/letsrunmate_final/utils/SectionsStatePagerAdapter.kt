@@ -12,9 +12,6 @@ class SectionsStatePagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapte
     private var mFragmentNames: HashMap<Int,String> = HashMap()
 
 
-
-
-
     override fun getItem(position: Int): Fragment {
         return mFragmentList[position]
     }
@@ -28,6 +25,8 @@ class SectionsStatePagerAdapter(fm: FragmentManager?) : FragmentStatePagerAdapte
          mFragments[fragment] = mFragmentList.size-1
          mFragmentNumbers[fragmentName] = mFragmentList.size-1
          mFragmentNames[mFragmentList.size-1] = fragmentName
+
+
     }
     private fun getFragmentNumber(fragmentName: String): Int? {
         if(mFragmentNumbers.containsKey(fragmentName)){

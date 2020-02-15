@@ -39,6 +39,7 @@ import com.nostra13.universalimageloader.core.ImageLoader
 import kotlinx.android.synthetic.main.fragment_run.*
 import java.io.File
 import java.io.FileOutputStream
+import java.text.DecimalFormat
 
 
 /**
@@ -181,8 +182,10 @@ class RunFragment : Fragment() {
                 }
                 val file = File(activity!!.applicationContext.filesDir,file_name)
                 val uri:Uri = Uri.fromFile(file)
+                val formatter =  DecimalFormat("#0.00");
 
-                val keytoSend = FirebaseHelper(activity!!.applicationContext).addNewActivity(showTime.text.toString(),distance_run.text.toString(),showPace.text.toString(),file_name,uri,kcal)
+
+                val keytoSend = FirebaseHelper(activity!!.applicationContext).addNewActivity(showTime.text.toString(),distance,showPace.text.toString(),file_name,uri,kcal)
 
 
                 val intent = Intent(activity!!.applicationContext,SummaryActivity::class.java)

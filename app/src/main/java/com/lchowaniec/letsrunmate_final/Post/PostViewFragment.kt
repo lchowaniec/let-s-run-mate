@@ -51,6 +51,7 @@ class PostViewFragment : Fragment(){
     private lateinit var mProfileImage:ImageView
     private lateinit var mLikeDesc:TextView
     private lateinit var mComment:ImageView
+    private lateinit var mCurrentUser:User
     //vars
     private lateinit var mActivity:Activity
     private var mActivityNumber:Int =0
@@ -63,6 +64,8 @@ class PostViewFragment : Fragment(){
     lateinit var stringUsers:StringBuilder
     lateinit var mTrophyString:String
     lateinit var mCommentString:TextView
+
+
 
     lateinit var mTrophy: Trophy
     private lateinit var mActivityID:String
@@ -104,8 +107,7 @@ class PostViewFragment : Fragment(){
         mActivity = getAc()!!
         mActivityID = getAc()!!.activity_id
         getActivityUserDetails()
-        getTrophyString()
-
+        getCurrentUser()
         val query = FirebaseDatabase.getInstance().reference
             .child(getString((R.string.firebase_activities)))
             .orderByChild(getString(R.string.firebase_activity_id))
@@ -283,6 +285,26 @@ class PostViewFragment : Fragment(){
 
 
     }
+    private fun getCurrentUser(){
+        val query = FirebaseDatabase.getInstance().reference
+            .child(getString((R.string.firebase_users)))
+            .orderByChild(getString(R.string.firebase_user_id))
+            .equalTo(FirebaseAuth.getInstance().currentUser!!.uid)
+        query.addListenerForSingleValueEvent(object: ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    mCurrentUser = ds.getValue(User::class.java)!!
+                }
+                getTrophyString()
+            }
+        })
+
+    }
+
     private fun getTrophyString(){
         val reference = FirebaseDatabase.getInstance().reference
         val query = reference
@@ -311,7 +333,7 @@ class PostViewFragment : Fragment(){
 
                             }
                             val splitted = stringUsers.toString().split(",")
-                            TrophiedByUser = stringUsers.toString().contains(mUserDetails.username+",")
+                            TrophiedByUser = stringUsers.toString().contains(mCurrentUser.username+",")
                             val ammount = splitted.lastIndex
                             print(ammount)
                             if(ammount ==1 ){

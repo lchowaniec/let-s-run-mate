@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/profile_app_bar"
+        layout="@layout/profile_bar_layout" />
+
+    <RelativeLayout
+        android:id="@+id/gradient_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+
+        android:background="@drawable/profile_page_gradient"
+        android:layout_below="@id/profile_app_bar"
+        app:layout_constraintTop_toBottomOf="@id/profile_app_bar">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/edit_profile_photo"
+            android:layout_width="180dp"
+            android:layout_height="1800dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="0dp"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="3dp" />
+
+        <ImageView
+            android:id="@+id/view_profile_add"
+            android:visibility="visible"
+            android:src="@drawable/ic_icon_add_friend"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@id/edit_profile_photo" />
+        <ImageView
+            android:id="@+id/view_profile_delete"
+            android:visibility="gone"
+            android:src="@drawable/ic_icon_delete_friend"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="15dp"
+            android:layout_toEndOf="@id/edit_profile_photo" />
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/devider1"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/white"
+        android:layout_below="@id/gradient_fragment"/>
+
+
+    <RelativeLayout
+        android:id="@+id/circle"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="170dp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_stats_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <RelativeLayout
+        android:id="@+id/profile_stats_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/white_bot"
+        android:layout_below="@id/gradient_fragment">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginEnd="25dp">
+            <include layout="@layout/profile_stats_view" android:id="@+id/profile_stats"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/profile_gridview_rel"
+        android:layout_marginBottom="60dp"
+        android:layout_below="@id/profile_stats_layout">
+        <ProgressBar
+            android:layout_centerVertical="true"
+            android:id="@+id/profile_listview_progress_bar"
+            android:visibility="visible"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ListView
+                android:id="@+id/profile_listview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true">
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/bottomNaviViewBar"
+            android:background="@drawable/white_top"
+            app:menu="@menu/bottom_menu"
+            app:labelVisibilityMode="unlabeled">
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+    </RelativeLayout>
+
+
+    <ProgressBar
+        android:id="@+id/profile_progress_bar"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</RelativeLayout>

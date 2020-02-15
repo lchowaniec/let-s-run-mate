@@ -36,7 +36,7 @@ class ActivityListAdapter(context: Context, resource: Int, objects: MutableList<
             val myFont3 = ResourcesCompat.getFont(context,R.font.bowlby_one_sc)
 
             mDistance.typeface = myFont
-            mDistance.text = "$distance km"
+            mDistance.text = String.format("%.2f", distance)
             mKcal.typeface = myFont2
             mKcal.text = "$kcal kcal"
             mDate.typeface = myFont3

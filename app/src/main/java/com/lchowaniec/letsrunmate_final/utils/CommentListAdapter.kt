@@ -27,6 +27,7 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
     private val mLayoutInflater:LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private val layoutResource:Int = resource
     private val mContext:Context = context
+    var selected:Int =999
 
 
     inner class ViewHolder{
@@ -36,7 +37,9 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
         lateinit var reply:TextView
         lateinit var trophies:TextView
         lateinit var profileImage:CircleImageView
-        lateinit var imageTrophy:ImageView
+        lateinit var imageTrophyWhite:ImageView
+        lateinit var imageTrophyGold:ImageView
+
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -54,8 +57,13 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
             viewHolder.reply = retView.findViewById(R.id.comment_reply)
             viewHolder.profileImage = retView.findViewById(R.id.comment_circleView)
             viewHolder.trophies = retView.findViewById(R.id.comment_like_counter)
-            viewHolder.imageTrophy = retView.findViewById(R.id.comment_trophy)
-            retView.tag = viewHolder
+            viewHolder.imageTrophyWhite = retView.findViewById(R.id.comment_trophy_unclicked)
+            viewHolder.imageTrophyGold = retView.findViewById(R.id.comment_trophy_clicked)
+
+
+
+        retView.tag = viewHolder
+
         
 
 
@@ -80,7 +88,6 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
                         snap.getValue(UserDetails::class.java)!!.profile_photo,
                         viewHolder.profileImage
                     )
-
                 }
             }
 
@@ -89,6 +96,17 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
             }
 
         })
+        if(selected ==position){
+            if(viewHolder.imageTrophyGold.visibility == View.VISIBLE){
+                viewHolder.imageTrophyGold.visibility = View.GONE
+                viewHolder.imageTrophyWhite.visibility = View.VISIBLE
+            }else if(viewHolder.imageTrophyWhite.visibility == View.VISIBLE){
+                viewHolder.imageTrophyGold.visibility == View.VISIBLE
+                viewHolder.imageTrophyGold.visibility == View.GONE
+            }
+
+        }
+
 
 
 
@@ -97,6 +115,8 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
 
         return retView!!
     }
+
+
 
 
     private fun getTimestampDiff(comment: Comment):String{

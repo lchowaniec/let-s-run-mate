@@ -17,6 +17,8 @@ open class Trophy() {
         this.mTrophyGold = mTrophyGold
         this.mTrophyWhite = mTrophyWhite
     }
+
+
     open fun throphing(){
         val animation = AnimatorSet()
         if(mTrophyGold.visibility == View.VISIBLE){

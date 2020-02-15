@@ -1,15 +1,18 @@
 package com.lchowaniec.letsrunmate_final.Profile
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.lchowaniec.letsrunmate_final.Models.Activity
 import com.lchowaniec.letsrunmate_final.Post.CommentsViewFragment
 import com.lchowaniec.letsrunmate_final.Post.PostViewFragment
 import com.lchowaniec.letsrunmate_final.R
+import com.lchowaniec.letsrunmate_final.utils.ProfileViewFragment
 
-class ProfileActivity : AppCompatActivity(), PostViewFragment.CommentListener {
+class ProfileActivity : AppCompatActivity(), PostViewFragment.CommentListener{
     override fun CommentListener(activity: Activity) {
         val fragment = CommentsViewFragment()
         val args = Bundle()
@@ -23,6 +26,7 @@ class ProfileActivity : AppCompatActivity(), PostViewFragment.CommentListener {
 
     private var ACTIVITY_NUM = 4
     private lateinit var imageProfile: ImageView
+    var TAG = "ProfileActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +35,7 @@ class ProfileActivity : AppCompatActivity(), PostViewFragment.CommentListener {
             R.anim.fade_in,
             R.anim.fade_out
         )
+        init()
 
 
         //profile_progress_bar.visibility = View.GONE
@@ -43,14 +48,46 @@ class ProfileActivity : AppCompatActivity(), PostViewFragment.CommentListener {
         //     val intent = Intent(this,
         //         AccountSettingsActivity::class.java)
         //     startActivity(intent)
-        val fragment = ProfileFragment()
-        val transaction: FragmentTransaction =
-            this.supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.container_profile, fragment)
-        transaction.commit()
+
 
 
         }
+    fun init(){
+        val intent = getIntent()
+        if(intent.hasExtra(getString(R.string.calling_activity))){
+            if(intent.hasExtra(getString(R.string.user))){
+                Log.d(TAG,"ProfileActivity: EXTRA EXSISTS")
+                val fragment = ProfileViewFragment()
+                val args = Bundle()
+                args.putParcelable(getString(R.string.user),intent.getParcelableExtra(getString(R.string.user)))
+                fragment.arguments = args
+                val transaction = supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.container_profile,fragment)
+                transaction.addToBackStack(getString(R.string.profile_view_fragment))
+                transaction.commit()
+            }else{
+                Toast.makeText(this,"Something gone wrong",Toast.LENGTH_LONG).show()
+
+            }
+
+
+
+        }else{
+
+            val fragment = ProfileFragment()
+            val transaction: FragmentTransaction =
+                this.supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.container_profile, fragment)
+            transaction.commit()
+
+        }
+
+
+
+
+
+
+    }
     }
 
 

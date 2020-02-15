@@ -12,6 +12,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.lchowaniec.letsrunmate_final.Feed.SearchFragment
 import com.lchowaniec.letsrunmate_final.R
 import com.lchowaniec.letsrunmate_final.utils.BottomNaviViewHelper
 import com.lchowaniec.letsrunmate_final.utils.SectionsStatePagerAdapter
@@ -56,16 +57,16 @@ class AccountSettingsActivity : AppCompatActivity() {
     }
     private fun setupFragments(){
         pagerAdapter = SectionsStatePagerAdapter(supportFragmentManager)
+        pagerAdapter.addFragment(SearchFragment(),"Add friends")
         pagerAdapter.addFragment(EditProfileFragment(),getString(R.string.edit_profile_fragment))
         pagerAdapter.addFragment(SignOutFragment(),getString(R.string.sign_out_fragment))
+
 
     }
     private fun setViewPager(fragmentNumber: Int){
         mRelativeLayout.visibility = View.GONE
         viewPager.adapter = pagerAdapter
         viewPager.currentItem = fragmentNumber
-
-
     }
 
     private fun setupBottomNavigationBar(){
@@ -83,8 +84,10 @@ class AccountSettingsActivity : AppCompatActivity() {
     }
     private fun setupSettingList() {
         val options = ArrayList<String>()
+        options.add("Add friends")
         options.add(getString(R.string.edit_profile_fragment))
         options.add(getString(R.string.sign_out_fragment))
+
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, options)
         accounts_settings_listview.adapter = adapter

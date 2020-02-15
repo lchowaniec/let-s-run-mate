@@ -86,7 +86,7 @@ open class HistorySummaryFragment : Fragment(), OnMapReadyCallback {
         val activityDetails = mActivity
         mPace.text = activityDetails.avgPace
         mTime.text = activityDetails.duration_time
-        mDistance.text = activityDetails.distance
+        mDistance.text = String.format("%.2f", activityDetails.distance)
         mKcal.text = activityDetails.kcal.toString()
         pointArray = FirebaseHelper(activity!!.applicationContext).allCoordinates(activityDetails.url)
         mToolbar.title = activityDetails.date
