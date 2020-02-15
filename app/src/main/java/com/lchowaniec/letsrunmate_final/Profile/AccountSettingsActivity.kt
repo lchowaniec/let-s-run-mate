@@ -56,17 +56,16 @@ class AccountSettingsActivity : AppCompatActivity() {
     }
     private fun setupFragments(){
         pagerAdapter = SectionsStatePagerAdapter(supportFragmentManager)
+        pagerAdapter.addFragment(SearchFragment(),"Add friends")
         pagerAdapter.addFragment(EditProfileFragment(),getString(R.string.edit_profile_fragment))
         pagerAdapter.addFragment(SignOutFragment(),getString(R.string.sign_out_fragment))
-        pagerAdapter.addFragment(SearchFragment(),"Add friends")
+
 
     }
     private fun setViewPager(fragmentNumber: Int){
         mRelativeLayout.visibility = View.GONE
         viewPager.adapter = pagerAdapter
         viewPager.currentItem = fragmentNumber
-
-
     }
 
     private fun setupBottomNavigationBar(){
@@ -84,8 +83,10 @@ class AccountSettingsActivity : AppCompatActivity() {
     }
     private fun setupSettingList() {
         val options = ArrayList<String>()
+        options.add("Add friends")
         options.add(getString(R.string.edit_profile_fragment))
         options.add(getString(R.string.sign_out_fragment))
+
 
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, options)
         accounts_settings_listview.adapter = adapter

@@ -4,42 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile.SearchActivity"
     android:background="@color/white">
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/relativeLayout1">
-        <include layout="@layout/snippet_search_bar"></include>
-    </RelativeLayout>
-    <ListView
-        android:id="@+id/search_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="50dp"
-        android:layout_below="@id/relativeLayout1"
->
-    </ListView>
-        <RelativeLayout
-            android:id="@+id/bottom_lrel"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true">
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/bottomNaviViewBar"
-                android:background="@drawable/white_top"
-                app:menu="@menu/bottom_menu"
-                app:labelVisibilityMode="unlabeled">
-            </com.google.android.material.bottomnavigation.BottomNavigationView>
+        android:id="@+id/search_container">
 
+    </RelativeLayout>
 
-        </RelativeLayout>
-
-
-</RelativeLayout>
 </RelativeLayout>

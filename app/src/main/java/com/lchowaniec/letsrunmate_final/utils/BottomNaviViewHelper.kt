@@ -6,6 +6,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.lchowaniec.letsrunmate_final.History.HistoryActivity
 import com.lchowaniec.letsrunmate_final.MainActivity
 import com.lchowaniec.letsrunmate_final.Profile.ProfileActivity
+import com.lchowaniec.letsrunmate_final.Profile.SearchActivity
 import com.lchowaniec.letsrunmate_final.R
 
 
@@ -28,7 +29,7 @@ open class BottomNaviViewHelper {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.feed ->{
-                    val intent2 = Intent(context,MainActivity::class.java)
+                    val intent2 = Intent(context,SearchActivity::class.java)
                     intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context?.startActivity(intent2)
                     return@setOnNavigationItemSelectedListener true

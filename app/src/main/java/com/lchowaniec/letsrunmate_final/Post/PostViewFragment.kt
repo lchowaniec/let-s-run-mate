@@ -283,6 +283,7 @@ class PostViewFragment : Fragment(){
 
 
     }
+
     private fun getTrophyString(){
         val reference = FirebaseDatabase.getInstance().reference
         val query = reference

@@ -12,18 +12,28 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/icon_settings_back"
+                    android:layout_marginStart="1dp"
+                    android:id="@+id/imageBack"
+                    android:contentDescription="@string/back" />
 
                 <EditText
-                    android:layout_width="120dp"
+                    android:layout_toRightOf="@id/imageBack"
+                    android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:textSize="25sp"
                     android:layout_marginStart="30dp"
-                    android:fontFamily="@font/bangers"
+                    android:fontFamily="@font/architects_daughter"
                     android:textColor="@color/white"
                     android:hint="@string/search"
                     android:background="@null"
-                    android:id="@+id/comment_titleBar"/>
+                    android:id="@+id/search_search"/>
             </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>

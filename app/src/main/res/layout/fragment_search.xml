@@ -19,26 +19,10 @@
             android:id="@+id/search_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="50dp"
             android:layout_below="@id/relativeLayout1"
             >
         </ListView>
-        <RelativeLayout
-            android:id="@+id/bottom_lrel"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_alignParentBottom="true">
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/bottomNaviViewBar"
-                android:background="@drawable/white_top"
-                app:menu="@menu/bottom_menu"
-                app:labelVisibilityMode="unlabeled">
-            </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-
-        </RelativeLayout>
 
 
     </RelativeLayout>

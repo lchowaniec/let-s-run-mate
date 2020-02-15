@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp">
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image2"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerVertical="true"
+            app:civ_border_color="@color/black"
+            app:civ_border_width="1dp"
+            android:layout_marginStart="10dp"
+            >
+
+        </de.hdodenhof.circleimageview.CircleImageView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="25dp"
+            android:layout_toRightOf="@id/image2">
+            <TextView
+                android:id="@+id/username2"
+                android:textSize="24sp"
+                android:text="hpdpdasd"
+                android:textColor="@color/black"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+            <TextView
+                android:layout_below="@id/username2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:textSize="20sp"
+                android:text="dasdas"
+                android:textColor="@color/black"
+                android:id="@+id/email2"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

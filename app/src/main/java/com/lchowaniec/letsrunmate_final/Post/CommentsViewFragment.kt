@@ -159,6 +159,7 @@ class CommentsViewFragment : Fragment() {
         mBackArrow.setOnClickListener{
             activity!!.supportFragmentManager.popBackStack()
         }
+
         mSend.setOnClickListener{
             if(mComment.text.toString() != ""){
                 addComment(mComment.text.toString())
@@ -194,8 +195,7 @@ class CommentsViewFragment : Fragment() {
                                 val keyID = singleSnapshot.key
 
                                 //case1: Then user already liked the photo
-                                if (TrophiedByUser && singleSnapshot.getValue(com.lchowaniec.letsrunmate_final.Models.Trophy::class.java)!!.user_id == FirebaseAuth.getInstance().currentUser!!.uid
-                                ) {
+                                if (TrophiedByUser) {
 
                                     myRef.child(getString(R.string.firebase_activities))
                                         .child(mActivity.activity_id)
@@ -237,7 +237,42 @@ class CommentsViewFragment : Fragment() {
 
         }
 
-    } private fun getTimestampDiff(activity: Activity):String{
+    }
+    private fun setGold(){
+        mTrophyGold.visibility = View.VISIBLE
+        mTropnyWhite.visibility = View.GONE
+    }
+    private fun setWhite(){
+        mTrophyGold.visibility = View.GONE
+        mTropnyWhite.visibility = View.VISIBLE
+    }
+    private fun isTrophied(comment:Comment) {
+        setGold()
+        TrophiedByUser = false
+        val ref = FirebaseDatabase.getInstance().reference
+        val query = ref.child(getString(R.string.firebase_activities))
+            .child(mActivity.activity_id)
+            .child(getString(R.string.firebase_comments))
+            .child(comment.commentId)
+            .child(getString(R.string.firebase_trophies))
+            .orderByChild(getString(R.string.firebase_user_id))
+            .equalTo(FirebaseAuth.getInstance().currentUser!!.uid)
+        query.addListenerForSingleValueEvent(object:ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                for(ds in p0.children){
+                    setGold()
+                    TrophiedByUser =true
+                }
+
+            }
+
+        })
+        }
+    private fun getTimestampDiff(activity: Activity):String{
         var difference = ""
         val c = Calendar.getInstance()
         val format = SimpleDateFormat("yyyy-MM-dd,HH:mm:ss", Locale.getDefault())
@@ -372,6 +407,7 @@ class CommentsViewFragment : Fragment() {
             // ...
         }
         setupWidgets()
+
         myRef.child(mContext.getString(R.string.firebase_activities))
             .child(mActivityID)
             .child(mContext.getString(R.string.firebase_comments))
@@ -385,25 +421,18 @@ class CommentsViewFragment : Fragment() {
                 }
 
                 override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-
-                    if(!mCommentList.contains(p0.getValue(Comment::class.java)!!)){
-                        Log.d(TAG,"TUTAJ DODAJE" + mCommentList+p0.getValue(Comment::class.java)!!)
-
-                        mCommentList.add(p0.getValue(Comment::class.java)!!)
-                        mCommentAdapter.notifyDataSetChanged()
-                    }
-
-
+                    Log.d(TAG,"OnChildChanged: CommentsViewFragment")
 
                 }
 
                 override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                    if(!mCommentList.contains(p0.getValue(Comment::class.java)!!)){
+
                         Log.d(TAG,"TUTAJ DODAJE 2")
 
                         mCommentList.add(p0.getValue(Comment::class.java)!!)
                         mCommentAdapter.notifyDataSetChanged()
-                    }              }
+                        isTrophied(p0.getValue(Comment::class.java)!!)
+                               }
 
                 override fun onChildRemoved(p0: DataSnapshot) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
