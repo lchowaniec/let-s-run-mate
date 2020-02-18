@@ -36,6 +36,10 @@ class AccountSettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_account_settings)
         val mAuth = FirebaseAuth.getInstance()
+        overridePendingTransition(
+            R.anim.fade_in,
+            R.anim.fade_out
+        )
 
         // Top bar title change
         val mToolbar: Toolbar = findViewById(R.id.account_settings_appbar)
@@ -97,8 +101,13 @@ class AccountSettingsActivity : AppCompatActivity() {
         }
 
     }
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
+    }
 }
+
+
 
 
 

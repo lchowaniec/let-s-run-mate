@@ -105,6 +105,7 @@ class CommentsViewFragment : Fragment() {
             mActivity = getActivityFromBundle()!!
             mActivityID = mActivity.activity_id
             setupFirebaseAuth()
+            println("WLAZLEM TUTAJ W TRY")
 
 
 

@@ -13,7 +13,7 @@ import com.lchowaniec.letsrunmate_final.R
 import com.lchowaniec.letsrunmate_final.utils.ProfileViewFragment
 
 class ProfileActivity : AppCompatActivity(), PostViewFragment.CommentListener{
-    override fun CommentListener(activity: Activity) {
+     override fun CommentListener(activity: Activity) {
         val fragment = CommentsViewFragment()
         val args = Bundle()
         args.putSerializable("Activity",activity)
@@ -87,6 +87,11 @@ class ProfileActivity : AppCompatActivity(), PostViewFragment.CommentListener{
 
 
 
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
     }
     }
 

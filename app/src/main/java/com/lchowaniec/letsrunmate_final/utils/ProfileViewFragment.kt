@@ -91,6 +91,7 @@ class ProfileViewFragment : Fragment() {
         try{
             mUser = getUserBundle()!!
 
+
             initUser()
 
         }catch (e:NullPointerException){
@@ -98,6 +99,26 @@ class ProfileViewFragment : Fragment() {
             activity!!.supportFragmentManager.popBackStack()
             Log.d(TAG,e.message)
         }
+        mListView = view!!.findViewById(R.id.profile_listview)
+        adapter = ActivityListAdapter(activity!!.applicationContext,R.layout.history_adapter_listview_layout,adapterList)
+        mListView.adapter =adapter
+        mListView.onItemClickListener = object : AdapterView.OnItemClickListener{
+            override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val newFragment = PostViewFragment()
+                val bundle = Bundle()
+                bundle.putSerializable("Activity",adapter.getItem(position))
+                bundle.putInt("Activity_number",ACTIVITY_NUM)
+                newFragment.arguments = bundle
+
+                val transaction = activity!!.supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.container_profile,newFragment)
+                    addToBackStack(null)
+
+                }
+                transaction.commit()
+            }
+        }
+
         isFriends()
 
         setupBottomNavigationBar()
@@ -105,6 +126,10 @@ class ProfileViewFragment : Fragment() {
         activitiesCounter()
         distanceCounter()
         friendsCounter()
+        if(mUser.user_id == FirebaseAuth.getInstance().currentUser!!.uid){
+            addFriend.visibility = View.GONE
+            deleteFriend.visibility = View.GONE
+        }
 
 
 
@@ -151,29 +176,7 @@ class ProfileViewFragment : Fragment() {
 
 
     }
-    private fun adapterInit(){
-        mListView = view!!.findViewById(R.id.profile_listview)
-        adapter = ActivityListAdapter(activity!!.applicationContext,R.layout.history_adapter_listview_layout,adapterList)
-        mListView.adapter =adapter
 
-        mListView.onItemClickListener = object : AdapterView.OnItemClickListener{
-            override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val newFragment = PostViewFragment()
-                val bundle = Bundle()
-                bundle.putSerializable("Activity",adapter.getItem(position))
-                bundle.putInt("Activity_number",ACTIVITY_NUM)
-                newFragment.arguments = bundle
-
-                val transaction = activity!!.supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.container_profile,newFragment)
-                    addToBackStack(null)
-
-                }
-                transaction.commit()
-            }
-        }
-
-    }
     private fun friendsCounter(){
         mFriendsFollowingCounter = 0
         mFriendsFollowersCounter = 0
@@ -212,6 +215,7 @@ class ProfileViewFragment : Fragment() {
 
     }
     private fun distanceCounter(){
+        mDistanceCounter = 0f
         val ref = FirebaseDatabase.getInstance().reference
         val query = ref.child(getString(R.string.firebase_users_activities))
             .child(mUser.user_id)
@@ -235,6 +239,7 @@ class ProfileViewFragment : Fragment() {
 
     }
     private fun activitiesCounter(){
+        mActivitiesCounter = 0
         Log.d(TAG,"activitiesCounter: "+mUser.user_id)
         val ref = FirebaseDatabase.getInstance().reference
         val query = ref.child(getString(R.string.firebase_users_activities))
@@ -268,7 +273,6 @@ class ProfileViewFragment : Fragment() {
             override fun onDataChange(p0: DataSnapshot) {
                 for(ds in p0.children){
                     setUnFriendIcon()
-                    adapterInit()
                 }
             }
         })

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_app_bar"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/orange_primary"
+    android:orientation="vertical"
+    android:theme="@style/ToolbarTheme"
+    app:titleTextColor="@color/white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/feed_title"
+            android:gravity="center_vertical"
+            android:text="@string/let_s_run_mate"
+            android:layout_width="325dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/bangers"
+            android:textColor="@color/white"
+            android:textSize="28sp" />
+
+    </RelativeLayout>
+</androidx.appcompat.widget.Toolbar>
+
+

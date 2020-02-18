@@ -262,7 +262,6 @@ class ProfileFragment : Fragment() {
                 mProgressBarListView.visibility = View.GONE                }
 
             override fun onChildRemoved(p0: DataSnapshot) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
         })
 
@@ -299,6 +298,7 @@ class ProfileFragment : Fragment() {
 
         }
     }
+
 
 
     override fun onStart() {

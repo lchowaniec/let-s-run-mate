@@ -28,6 +28,8 @@ import com.mapbox.mapboxsdk.maps.Style
 import kotlinx.android.synthetic.main.activity_main.*
 
 
+
+
 class MainActivity : AppCompatActivity(),OnMapReadyCallback,PermissionsListener {
     private lateinit var mAuth: FirebaseAuth
     private var ACTIVITY_NUM = 0
@@ -47,6 +49,8 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback,PermissionsListener 
             R.anim.fade_in,
             R.anim.fade_out
         )
+
+
 
 
 
@@ -115,6 +119,7 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback,PermissionsListener 
             enableLocationComponent(it)
         }
     }
+
     @SuppressLint("MissingPermission")
     private fun enableLocationComponent(loadedMapStyle: Style){
         if(PermissionsManager.areLocationPermissionsGranted(this)){

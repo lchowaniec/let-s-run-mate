@@ -337,18 +337,18 @@ class PostViewFragment : Fragment(){
                             val ammount = splitted.lastIndex
                             print(ammount)
                             if(ammount ==1 ){
-                                mTrophyString = "Liked by " + splitted[0]
+                                mTrophyString = "Trophied by " + splitted[0]
 
                             }else if(ammount ==2 ){
-                                mTrophyString = "Liked by " + splitted[0] + " and "+splitted[1]
+                                mTrophyString = "Trophied by " + splitted[0] + " and "+splitted[1]
                             }else if(ammount ==3 ){
-                                mTrophyString = "Liked by " + splitted[0] +", "+splitted[1] +" and "+splitted[2]
+                                mTrophyString = "Trophied by " + splitted[0] +", "+splitted[1] +" and "+splitted[2]
 
                             }else if(ammount ==4 ){
-                                mTrophyString = "Liked by " + splitted[0] +", "+splitted[1] +", "+splitted[2]+", "+splitted[1] +" and"+splitted[3]
+                                mTrophyString = "Trophied by " + splitted[0] +", "+splitted[1] +", "+splitted[2]+", "+splitted[1] +" and"+splitted[3]
 
                             }else if(ammount>4){
-                                mTrophyString = "Liked by " + splitted[0] +", "+splitted[1] +", "+splitted[2]+", "+splitted[1] +" and"+ (splitted.size-3) + " others"
+                                mTrophyString = "Trophied by " + splitted[0] +", "+splitted[1] +", "+splitted[2]+", "+splitted[1] +" and"+ (splitted.size-3) + " others"
 
                             }
                             setupWidgets()

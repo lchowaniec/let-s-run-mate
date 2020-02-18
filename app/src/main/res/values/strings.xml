@@ -75,7 +75,7 @@
     <string name="add_comment_here">Add comment here</string>
     <string name="comments">Comments</string>
     <string name="reply">Reply</string>
-    <string name="today">today</string>
+    <string name="today">Today</string>
     <string name="distance_run">Distance run</string>
     <string name="interval_run">Interval run</string>
     <string name="_0_00">0,00</string>
@@ -93,6 +93,11 @@
     <string name="profile_view_fragment">profile_view_fragment</string>
     <string name="firebase_following">following</string>
     <string name="firebase_followers">followers</string>
+    <string name="user_details">user_details</string>
+    <string name="feed_activity">feed_activity</string>
+    <string name="activity">Activity</string>
+    <string name="STOP_SERVICE">STOP_SERVICE</string>
+    <string name="START_SERVICE">START_SERVICE</string>
 
 
 </resources>
