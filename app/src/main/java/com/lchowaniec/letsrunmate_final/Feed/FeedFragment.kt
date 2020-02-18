@@ -69,7 +69,7 @@ class FeedFragment : Fragment() {
                 .child(mFollowingList.get(i))
                 .orderByChild(mContext.getString(R.string.user_id))
                 .equalTo(mFollowingList.get(i))
-            println(mFollowingList.get(i))
+
             query.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     for (ds in dataSnapshot.children) {

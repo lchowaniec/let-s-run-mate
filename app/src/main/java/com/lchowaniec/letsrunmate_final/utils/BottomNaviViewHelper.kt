@@ -3,6 +3,7 @@ package com.lchowaniec.letsrunmate_final.utils
 import android.content.Context
 import android.content.Intent
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.lchowaniec.letsrunmate_final.Chat.ChatActivity
 import com.lchowaniec.letsrunmate_final.Feed.FeedActivity
 import com.lchowaniec.letsrunmate_final.History.HistoryActivity
 import com.lchowaniec.letsrunmate_final.MainActivity
@@ -41,7 +42,7 @@ open class BottomNaviViewHelper {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.messages->{
-                    val intent4 = Intent(context,MainActivity::class.java)
+                    val intent4 = Intent(context,ChatActivity::class.java)
                     intent4.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context?.startActivity(intent4)
                     return@setOnNavigationItemSelectedListener true

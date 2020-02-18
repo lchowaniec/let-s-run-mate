@@ -132,6 +132,7 @@ class HistoryFragment : Fragment() {
                 newFragment.arguments = bundle
 
                 val transaction = activity!!.supportFragmentManager.beginTransaction().apply {
+                    setCustomAnimations(R.anim.enter_right_left,R.anim.exit_right_left,R.anim.enter_left_right,R.anim.exit_left_right)
                     replace(R.id.history_container,newFragment)
                     addToBackStack(null)
 
