@@ -184,7 +184,7 @@ open class FirebaseHelper(context: Context) {
             var my_uri:String
 
             val acc_uid = FirebaseAuth.getInstance().currentUser!!.uid
-            val my_ref = myRefStorage.child(Paths().FIREBASE_ACTIVITIES_STORAGE + "/" + acc_uid +"/"+ file_name +".txt")
+            val my_ref = myRefStorage.child(Paths().FIREBASE_ACTIVITIES_STORAGE + "/" + acc_uid +"/"+ newActivityKey +".txt")
             upload_task= my_ref.putFile(file)
             val urlTask = upload_task.continueWithTask(object: Continuation<UploadTask.TaskSnapshot,Task<Uri>>{
                 override fun then(p0: Task<UploadTask.TaskSnapshot>): Task<Uri> {
@@ -212,6 +212,7 @@ open class FirebaseHelper(context: Context) {
             activity.distance = distance
             activity.avgPace = avgPace
             activity.kcal = kcal
+            activity.caption = "${activity.date} run"
 
 
             myRef.child(mContext.getString(R.string.firebase_users_activities))
