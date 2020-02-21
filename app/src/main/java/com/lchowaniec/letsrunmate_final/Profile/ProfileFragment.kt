@@ -91,12 +91,35 @@ class ProfileFragment : Fragment() {
 
         setupBottomNavigationBar()
         setupFirebaseAuth()
+        myRef.child(getString(R.string.firebase_users_activities)).child(mAuth.currentUser!!.uid).addChildEventListener(object :ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                mProgressBarListView.visibility = View.GONE
+                Toast.makeText(activity!!.applicationContext,"No activities to show", Toast.LENGTH_LONG).show()            }
+
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+            }
+
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                adapterList.add(0,p0.getValue(Activity::class.java)!!)
+                adapter.notifyDataSetChanged()
+                mProgressBarListView.visibility = View.GONE            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                adapterList.add(0,p0.getValue(Activity::class.java)!!)
+                adapter.notifyDataSetChanged()
+                mProgressBarListView.visibility = View.GONE            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+            }
+        })
 
 
 
         mListView = view.findViewById(R.id.profile_listview)
         adapter = ActivityListAdapter(activity!!.applicationContext,R.layout.history_adapter_listview_layout,adapterList)
         mListView.adapter =adapter
+
+
 
 
         profile_menu.setOnClickListener {
@@ -136,7 +159,6 @@ class ProfileFragment : Fragment() {
             .child(FirebaseAuth.getInstance().currentUser!!.uid)
         query.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -152,7 +174,6 @@ class ProfileFragment : Fragment() {
             .child(FirebaseAuth.getInstance().currentUser!!.uid)
         query2.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -172,7 +193,6 @@ class ProfileFragment : Fragment() {
             .child(FirebaseAuth.getInstance().currentUser!!.uid)
         query.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -196,7 +216,6 @@ class ProfileFragment : Fragment() {
             .child(FirebaseAuth.getInstance().currentUser!!.uid)
         query.addListenerForSingleValueEvent(object:ValueEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onDataChange(p0: DataSnapshot) {
@@ -242,29 +261,6 @@ class ProfileFragment : Fragment() {
     /* FIREBASE*/
     private fun setupFirebaseAuth(){
         mAuth = FirebaseAuth.getInstance()
-        val myRef2 = mFirebaseDatabase.reference.child(mContext!!.getString(R.string.firebase_users_activities))
-        myRef2.child(mAuth.currentUser!!.uid).addChildEventListener(object: ChildEventListener{
-            override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-
-            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                adapterList.add(p0.getValue(Activity::class.java)!!)
-                adapter.notifyDataSetChanged()
-                mProgressBarListView.visibility = View.GONE             }
-            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
-                adapterList.add(p0.getValue(Activity::class.java)!!)
-                adapter.notifyDataSetChanged()
-                mProgressBarListView.visibility = View.GONE                }
-
-            override fun onChildRemoved(p0: DataSnapshot) {
-            }
-        })
-
 
         mAuthListener = FirebaseAuth.AuthStateListener {
             fun onAuthStateChanged(firebaseAuth: FirebaseAuth) {
@@ -282,7 +278,7 @@ class ProfileFragment : Fragment() {
             }
             myRef.addListenerForSingleValueEvent(object: ValueEventListener{
                 override fun onCancelled(dataSnapshot: DatabaseError) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
                 }
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {

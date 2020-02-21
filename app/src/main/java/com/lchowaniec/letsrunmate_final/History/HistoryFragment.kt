@@ -5,10 +5,7 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
@@ -79,11 +76,11 @@ class HistoryFragment : Fragment() {
         mProgressBar = view.findViewById(R.id.history_progress_bar)
         myRef.child(mAuth.currentUser!!.uid).addChildEventListener(object :ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                mProgressBar.visibility = View.GONE
+                Toast.makeText(activity!!.applicationContext,"No activities to show", Toast.LENGTH_LONG).show()
             }
 
             override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
@@ -115,10 +112,9 @@ class HistoryFragment : Fragment() {
 
 
 
-            override fun onChildRemoved(p0: DataSnapshot) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-            }
-        })
+        override fun onChildRemoved(p0: DataSnapshot) {
+        }
+    })
 
         bottomNavigationView = view.findViewById(R.id.bottomNaviViewBar)
         setupBottomNavigationBar()

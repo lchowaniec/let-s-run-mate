@@ -52,7 +52,7 @@ class MessageAdapter:RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         val mMessage = itemView.message_textview
         val mPhoto = itemView.message_profile_photo
         fun bind(message: Message){
-     
+
             mMessage.setText(message.message)
 
 

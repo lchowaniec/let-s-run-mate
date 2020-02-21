@@ -132,8 +132,9 @@ class FeedFragment : Fragment() {
                 if (iter > 10) {
                     iter = 10
                 }
+                println("TUTAJ ITER SPRAWDZAM "+ iter)
                 mCounter = 0
-                for (i in 0..iter) {
+                for (i in 0..iter-1) {
                     mPartActivitiesList.add(mActivitiesList.get(i))
                     mCounter++
                     Log.d(TAG,"mPartActivitiesList: "+ mPartActivitiesList)
