@@ -20,6 +20,8 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private val mContext = baseContext
     private lateinit var email:String
+    private lateinit var password:String
+    private lateinit var username:String
     private lateinit var myRef:DatabaseReference
     private lateinit var mFirebaseDatabase:FirebaseDatabase
     private lateinit var user:FirebaseUser
@@ -44,9 +46,9 @@ class RegisterActivity : AppCompatActivity() {
         myRef = mFirebaseDatabase.reference
 
         create_acc_btn.setOnClickListener {
-            val username = reg_username.text.toString().trim()
-            val email = reg_email.text.toString().trim()
-            val password = reg_password.text.toString().trim()
+             username = reg_username.text.toString().trim()
+             email = reg_email.text.toString().trim()
+             password = reg_password.text.toString().trim()
             register_user(username, email, password)
             register_progress_bar.visibility = View.VISIBLE
             register_wait.visibility = View.VISIBLE
@@ -149,7 +151,7 @@ class RegisterActivity : AppCompatActivity() {
 
                 val usern = username + add
 
-                FirebaseHelper(applicationContext).addNewUser(email,usern,"Add your own description here, mate !","")
+                FirebaseHelper(this@RegisterActivity).addNewUser(email,usern,"Add your own description here, mate !","")
             }
             })}
 
