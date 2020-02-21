@@ -11,6 +11,7 @@ open class UserDetails() : Parcelable {
      var activities: Int =0
     var profile_photo :String = ""
     var user_id:String =  ""
+    var last_online:Long = 0L
 
     constructor(parcel: Parcel) : this() {
         description = parcel.readString()!!
@@ -22,7 +23,7 @@ open class UserDetails() : Parcelable {
         user_id = parcel.readString()!!
     }
 
-    constructor(description: String, username: String, distance: Float, friends: Int, activities: Int,profile_photo:String,user_id:String): this() {
+    constructor(description: String, username: String, distance: Float, friends: Int, activities: Int,profile_photo:String,user_id:String,last_online:Long): this() {
 
         this.description = description
         this.username = username
@@ -31,6 +32,7 @@ open class UserDetails() : Parcelable {
         this.activities = activities
         this.profile_photo = profile_photo
         this.user_id = user_id
+        this.last_online = last_online
 
     }
 
@@ -42,6 +44,7 @@ open class UserDetails() : Parcelable {
         parcel.writeInt(activities)
         parcel.writeString(profile_photo)
         parcel.writeString(user_id)
+        parcel.writeLong(last_online)
     }
 
     override fun describeContents(): Int {

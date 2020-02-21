@@ -7,4 +7,5 @@
     <color name="black">#464646</color>
     <color name="grey">#BFBFBF</color>
     <color name="orange_primary">#FF8C00</color>
+    <color name="orange_secondary">#fcba77</color>
 </resources>

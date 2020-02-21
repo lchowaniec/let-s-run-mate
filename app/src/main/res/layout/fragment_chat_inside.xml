@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Chat.ChatInsideFragment">
+    <include layout="@layout/chat_inside_bar_layout" android:id="@+id/chat_inside_app_bar"/>
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:layout_above="@id/chat_inside_edittext_layout"
+        android:layout_below="@id/chat_inside_app_bar">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chat_inside_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/chat_inside_edittext_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@android:drawable/edit_text"
+        android:padding="0.1dp" >
+
+        <EditText
+            android:layout_marginStart="20dp"
+            android:id="@+id/chat_inside_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/chat_inside_send"
+            android:hint="Message..."
+            android:textColor="@color/black"
+            android:background="#FFFFFF"
+            />
+
+        <ImageView
+            android:id="@+id/chat_inside_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_chat_send" />
+    </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+
+

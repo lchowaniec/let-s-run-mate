@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.lchowaniec.letsrunmate_final.Login_Register.StartActivity
 import com.lchowaniec.letsrunmate_final.Run.RunActivityController
 import com.lchowaniec.letsrunmate_final.utils.BottomNaviViewHelper
@@ -76,6 +77,8 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback,PermissionsListener 
         val currentUser = mAuth.currentUser
         if(currentUser == null) {
             showStartScreen()
+        }else{
+            updateOnline()
         }
         mapView.onStart()
        // scrollView.scrollTo(100,0)
@@ -118,6 +121,14 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback,PermissionsListener 
                 "mapbox://styles/lukasz-ch/ck59kuwvd0diw1cru5hrl6f7d")){
             enableLocationComponent(it)
         }
+    }
+    private fun updateOnline(){
+        val ref = FirebaseDatabase.getInstance().reference
+        val time = System.currentTimeMillis()
+        ref.child(getString(R.string.firebase_user_details))
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+            .child(getString(R.string.last_online))
+            .setValue(time)
     }
 
     @SuppressLint("MissingPermission")

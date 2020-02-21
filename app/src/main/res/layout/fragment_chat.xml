@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Chat.ChatFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <include layout="@layout/chat_bar_layout" android:id="@+id/chat_app_bar"></include>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/chat_app_bar"
+        android:id="@+id/relativeLayout1">
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Messages"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:fontFamily="@font/bowlby_one_sc"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout2"
+        android:layout_above="@id/chat_bottom"
+        android:layout_below="@id/relativeLayout1">
+        <ListView
+            android:id="@+id/chat_listview"
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </RelativeLayout>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/chat_bottom"
+        android:background="@color/orange_primary"
+        app:menu="@menu/bottom_menu"
+        app:labelVisibilityMode="unlabeled">
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+</RelativeLayout>
