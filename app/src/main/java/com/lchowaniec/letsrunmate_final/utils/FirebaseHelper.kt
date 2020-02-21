@@ -250,7 +250,8 @@ open class FirebaseHelper(context: Context) {
             0,
             0,
             "",
-            userID
+            userID,
+            System.currentTimeMillis()
         )
         if (userID != null) {
             myRef.child(mContext.getString(firebase_user_details))

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/chat_inside_app_bar"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@drawable/grey_bot"
+    android:orientation="vertical"
+    android:theme="@style/ToolbarTheme"
+    app:titleTextColor="@color/white"
+    app:title="@string/Chat"
+    app:titleTextAppearance="@style/Toolbar.Titletext">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/icon_settings_back"
+            android:id="@+id/chat_inside_back"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/chat_inside_profile_photo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@id/chat_inside_back"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="25dp"
+            android:src="@drawable/ic_icon_add_friend"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:weightSum="100"
+            android:layout_toRightOf="@id/chat_inside_profile_photo">
+            <TextView
+                android:text="lukibzdziuki"
+                android:fontFamily="@font/bowlby_one_sc"
+                android:id="@+id/chat_inside_username"
+                android:layout_width="match_parent"
+                android:gravity="bottom"
+                android:textColor="@color/black"
+                android:layout_marginStart="5dp"
+                android:layout_height="match_parent"
+                android:layout_weight="50"/>
+            <TextView
+                android:text="1 year ago"
+                android:gravity="top"
+                android:textColor="@color/black"
+                android:layout_marginStart="5dp"
+                android:id="@+id/chat_inside_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="50"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</androidx.appcompat.widget.Toolbar>

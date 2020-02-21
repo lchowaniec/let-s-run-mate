@@ -98,6 +98,11 @@
     <string name="activity">Activity</string>
     <string name="STOP_SERVICE">STOP_SERVICE</string>
     <string name="START_SERVICE">START_SERVICE</string>
+    <string name="Chat">Chat\t</string>
+    <string name="last_online">last_online</string>
+    <string name="chat_activity">chat_activity</string>
+    <string name="chat_inside_fragment">chat_inside_fragment</string>
+    <string name="activity_number">activity_number</string>
 
 
 </resources>
