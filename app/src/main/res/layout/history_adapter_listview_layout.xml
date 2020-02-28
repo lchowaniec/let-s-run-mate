@@ -65,6 +65,17 @@
         android:layout_height="60dp"
         android:layout_weight="65">
         <TextView
+            android:layout_weight="50"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="28sp"
+            android:layout_marginEnd="15dp"
+            android:fontFamily="@font/bangers"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/history_adapter_distance"/>
+        <com.lchowaniec.letsrunmate_final.utils.SquareImageView
+            android:layout_weight="50"
             android:layout_marginEnd="10dp"
             android:gravity="center"
             android:textColor="@color/black"
@@ -72,6 +83,6 @@
             android:fontFamily="@font/bangers"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/history_adapter_distance"/>
+            android:id="@+id/history_adapter_photo"/>
     </LinearLayout>
 </LinearLayout>

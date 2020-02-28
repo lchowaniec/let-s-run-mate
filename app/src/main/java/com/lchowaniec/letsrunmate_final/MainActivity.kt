@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity(),OnMapReadyCallback,PermissionsListener 
         mAuth = FirebaseAuth.getInstance()
 
         setupBottomNavigationBar()
-        scrollViewRuns.isHorizontalScrollBarEnabled = false
         basic_run_btn.setOnClickListener {
             val intent = Intent(this,RunActivityController::class.java)
             startActivity(intent)

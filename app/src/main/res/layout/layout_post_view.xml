@@ -44,7 +44,7 @@
                 <com.lchowaniec.letsrunmate_final.utils.SquareImageView
                     android:layout_below="@id/relativeLayout1"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="350dp"
                     android:id="@+id/post_image"
                     android:scaleType="centerCrop"/>
 

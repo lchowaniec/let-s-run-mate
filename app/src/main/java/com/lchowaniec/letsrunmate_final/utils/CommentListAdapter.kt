@@ -62,7 +62,9 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
 
 
 
+
         retView.tag = viewHolder
+
 
         
 
@@ -82,12 +84,10 @@ open class CommentListAdapter(context: Context, resource: Int, objects: MutableL
         query.addListenerForSingleValueEvent(object: ValueEventListener {
             override fun onDataChange(p0: DataSnapshot) {
                 for (snap in p0.children){
-                    viewHolder.username.text = snap.getValue(UserDetails::class.java)!!.username
-                    val imageLoader = ImageLoader.getInstance()
-                    imageLoader.displayImage(
-                        snap.getValue(UserDetails::class.java)!!.profile_photo,
-                        viewHolder.profileImage
-                    )
+                    val user = snap.getValue(UserDetails::class.java)!!
+                    viewHolder.username.text = user.username
+                    ImageLoader.getInstance().displayImage(user.profile_photo,viewHolder.profileImage)
+                    println(user)
                 }
             }
 

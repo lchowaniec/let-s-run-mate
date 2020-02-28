@@ -6,9 +6,13 @@
     android:layout_height="60dp"
     android:background="@color/orange_primary"
     android:orientation="vertical"
-    android:theme="@style/ToolbarTheme"
-    app:titleTextColor="@color/white"
-    app:title="@string/Chat"
-    app:titleTextAppearance="@style/Toolbar.Titletext">
+    android:theme="@style/ToolbarTheme">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Chat"
+        android:textSize="28dp"
+        android:fontFamily="@font/bangers"
+        android:textColor="@color/white"/>
 
 </androidx.appcompat.widget.Toolbar>

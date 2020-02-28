@@ -38,12 +38,14 @@
                         android:layout_centerVertical="true"
                         android:id="@+id/post_options_image"/>
                 </RelativeLayout>
-                    <com.lchowaniec.letsrunmate_final.utils.SquareImageView
-                        android:layout_below="@id/relativeLayout1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/post_image"
-                        android:scaleType="centerCrop"/>
+
+                <com.lchowaniec.letsrunmate_final.utils.SquareImageView
+                    android:id="@+id/post_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relativeLayout1"
+                    android:layout_marginTop="0dp"
+                    android:scaleType="centerCrop" />
 
                 <RelativeLayout
                     android:background="@color/white"

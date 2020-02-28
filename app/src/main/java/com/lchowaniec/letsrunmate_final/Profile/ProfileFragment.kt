@@ -24,6 +24,8 @@ import com.lchowaniec.letsrunmate_final.utils.FirebaseHelper
 import com.lchowaniec.letsrunmate_final.utils.ImageLoader
 import com.nostra13.universalimageloader.core.ImageLoader.TAG
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * A simple [Fragment] subclass.
@@ -110,6 +112,11 @@ class ProfileFragment : Fragment() {
                 mProgressBarListView.visibility = View.GONE            }
 
             override fun onChildRemoved(p0: DataSnapshot) {
+            }
+        })
+        Collections.sort(adapterList, object : Comparator<Activity> {
+            override fun compare(o1: Activity?, o2: Activity?): Int {
+                return o2!!.date.compareTo(o1!!.date)
             }
         })
 

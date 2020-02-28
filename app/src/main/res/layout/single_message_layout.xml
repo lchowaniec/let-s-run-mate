@@ -9,8 +9,7 @@
         android:id="@+id/message_profile_photo"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_centerVertical="true"
-        android:src="@drawable/mapbox_info_icon_default"/>
+        android:layout_centerVertical="true" />
 
     <TextView
         android:id="@+id/message_textview"
@@ -23,7 +22,7 @@
         android:layout_marginEnd="20dp"
         android:layout_toRightOf="@id/message_profile_photo"
         android:background="@drawable/message_background"
-        android:padding="25dp"
+        android:padding="15dp"
         android:text="HELLO BOYYYY" />
 
 </RelativeLayout>

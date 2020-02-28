@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import com.lchowaniec.letsrunmate_final.Models.Activity
 import com.lchowaniec.letsrunmate_final.R
+import com.nostra13.universalimageloader.core.ImageLoader
 
 class ActivityListAdapter(context: Context, resource: Int, objects: MutableList<Activity>):
     ArrayAdapter<Activity>(context, resource, objects) {
@@ -23,6 +24,7 @@ class ActivityListAdapter(context: Context, resource: Int, objects: MutableList<
             val kcal = getItem(position)!!.kcal
             val time = getItem(position)!!.duration_time
             val pace = getItem(position)!!.avgPace
+            val photo = getItem(position)!!.url_photo
 
             val inflater = LayoutInflater.from(context)
             retView = inflater.inflate(mResource,parent,false)
@@ -34,6 +36,7 @@ class ActivityListAdapter(context: Context, resource: Int, objects: MutableList<
             val myFont = ResourcesCompat.getFont(context,R.font.bangers)
             val myFont2 = ResourcesCompat.getFont(context,R.font.paprika)
             val myFont3 = ResourcesCompat.getFont(context,R.font.bowlby_one_sc)
+            val mPhoto = retView.findViewById<SquareImageView>(R.id.history_adapter_photo)
 
             mDistance.typeface = myFont
             mDistance.text = String.format("%.2f", distance)
@@ -45,6 +48,7 @@ class ActivityListAdapter(context: Context, resource: Int, objects: MutableList<
             mTime.text = time
             mPace.typeface = myFont2
             mPace.text = pace.replace(",","'")
+            ImageLoader.getInstance().displayImage(photo,mPhoto)
 
         }else{
             retView = convertView

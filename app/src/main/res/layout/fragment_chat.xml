@@ -7,7 +7,10 @@
     tools:context=".Chat.ChatFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <include layout="@layout/chat_bar_layout" android:id="@+id/chat_app_bar"></include>
+
+    <include
+        android:id="@+id/chat_app_bar"
+        layout="@layout/chat_bar_layout"></include>
 
     <RelativeLayout
         android:layout_width="match_parent"

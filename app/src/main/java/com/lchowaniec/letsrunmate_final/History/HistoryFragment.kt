@@ -19,6 +19,8 @@ import com.lchowaniec.letsrunmate_final.utils.ActivityListAdapter
 import com.lchowaniec.letsrunmate_final.utils.BottomNaviViewHelper
 import com.lchowaniec.letsrunmate_final.utils.FirebaseHelper
 import com.nostra13.universalimageloader.core.ImageLoader
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * A simple [Fragment] subclass.
@@ -65,6 +67,11 @@ class HistoryFragment : Fragment() {
         //fields
         mListView = view.findViewById(R.id.history_listview)
 
+        Collections.sort(arra, object : Comparator<Activity> {
+            override fun compare(o1: Activity?, o2: Activity?): Int {
+                return o2!!.date.compareTo(o1!!.date)
+            }
+        })
         adapter = ActivityListAdapter(activity!!.applicationContext,R.layout.history_adapter_listview_layout,arra)
         mListView.adapter = adapter
 

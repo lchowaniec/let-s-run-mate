@@ -65,9 +65,8 @@ open class HistorySummaryFragment : Fragment(), OnMapReadyCallback {
 
         //font
         val myFont = ResourcesCompat.getFont(getActivity()!!.applicationContext,R.font.bangers)
-        val splits = view.findViewById<TextView>(R.id.summary_splitstext)
-        splits.typeface = myFont
         mDistance.typeface = myFont
+        mTime.typeface = myFont
         val obj: Activity = activity as Activity
         setActivityDetails(obj)
 

@@ -100,13 +100,12 @@ class FeedFragment : Fragment() {
     private fun getFollowing(){
         val reference = FirebaseDatabase.getInstance().reference
         val query = reference
-            .child(mContext.getString(R.string.firebase_followers))
+            .child(mContext.getString(R.string.firebase_following))
             .child(FirebaseAuth.getInstance().currentUser!!.uid)
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 for (ds in dataSnapshot.children) {
                     mFollowingList.add(ds.child(mContext.getString(R.string.firebase_user_id)).getValue().toString())
-                    println(ds.child(getString(R.string.firebase_user_id)))
                 }
                 mFollowingList.add(FirebaseAuth.getInstance().currentUser!!.uid)
                 getActivities()

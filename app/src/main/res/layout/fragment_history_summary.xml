@@ -42,25 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/summary_listview"
-            android:layout_below="@id/summary_map_rel">
-
-            <TextView
-                android:text="@string/splits"
-                android:textSize="24sp"
-                android:textColor="@color/black"
-                android:gravity="center_vertical"
-                android:paddingStart="20dp"
-                android:paddingEnd="20dp"
-                android:fontFamily="@font/bangers"
-                android:id="@+id/summary_splitstext"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"/>
-
-            <ListView
-                android:layout_below="@id/summary_splitstext"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </RelativeLayout>
+            android:layout_below="@id/summary_map_rel"/>
 
 
     </RelativeLayout>

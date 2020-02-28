@@ -44,7 +44,6 @@ open class FeedListAdapter(context: Context, resource: Int, objects: MutableList
 
     inner class ViewHolder {
         lateinit var mProfilePhoto: CircleImageView
-        lateinit var thropyString: String
         lateinit var username: TextView
         lateinit var timestamp: TextView
         lateinit var caption: TextView
@@ -425,21 +424,21 @@ open class FeedListAdapter(context: Context, resource: Int, objects: MutableList
                                 val ammount = splitted.lastIndex
                                 print(ammount)
                                 if(ammount ==1 ){
-                                    holder.thropyString = "Trophied by " + splitted[0]
+                                    holder.trophies.text = "Trophied by " + splitted[0]
 
                                 }else if(ammount ==2 ){
-                                    holder.thropyString = "Trophied by " + splitted[0] + " and "+splitted[1]
+                                    holder.trophies.text = "Trophied by " + splitted[0] + " and "+splitted[1]
                                 }else if(ammount ==3 ){
-                                    holder.thropyString = "Trophied by " + splitted[0] +", "+splitted[1] +" and "+splitted[2]
+                                    holder.trophies.text = "Trophied by " + splitted[0] +", "+splitted[1] +" and "+splitted[2]
 
                                 }else if(ammount ==4 ){
-                                    holder.thropyString = "Trophied by " + splitted[0] +", "+splitted[1] +", "+splitted[2]+", "+splitted[1] +" and"+splitted[3]
+                                    holder.trophies.text = "Trophied by " + splitted[0] +", "+splitted[1] +", "+splitted[2]+", "+splitted[1] +" and"+splitted[3]
 
                                 }else if(ammount>4){
-                                    holder.thropyString = "Trophied by " + splitted[0] +", "+splitted[1] +", "+splitted[2]+", "+splitted[1] +" and"+ (splitted.size-3) + " others"
+                                    holder.trophies.text = "Trophied by " + splitted[0] +", "+splitted[1] +", "+splitted[2]+", "+splitted[1] +" and"+ (splitted.size-3) + " others"
 
                                 }
-                                setupTrophyString(holder,holder.thropyString)
+                                setupTrophyString(holder,holder.trophies.text.toString())
 
 
                             }
@@ -457,9 +456,9 @@ open class FeedListAdapter(context: Context, resource: Int, objects: MutableList
 
                     }
                     if (!p0.exists()){
-                        holder.thropyString = ""
+                        holder.trophies.text = ""
                         holder.trophiedByUser = false
-                        setupTrophyString(holder,holder.thropyString)
+                        setupTrophyString(holder,holder.trophies.text.toString())
 
                     }
                 }
@@ -474,9 +473,9 @@ open class FeedListAdapter(context: Context, resource: Int, objects: MutableList
 
         }catch (e:NullPointerException){
             Log.d(TAG,"getTrophyString: "+e.message)
-            holder.thropyString = ""
+            holder.trophies.text = ""
             holder.trophiedByUser = false
-            setupTrophyString(holder,holder.thropyString)
+            setupTrophyString(holder,holder.trophies.text.toString())
         }
 
     }

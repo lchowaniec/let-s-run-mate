@@ -81,7 +81,6 @@ open class FirebaseHelper(context: Context) {
         }
 
 
-
     open fun getTime(): String {
         val mDate = SimpleDateFormat("yyyy-MM-dd, HH:mm:ss", Locale.getDefault())
         mDate.timeZone = TimeZone.getDefault()

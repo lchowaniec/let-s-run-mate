@@ -17,7 +17,7 @@ import com.nostra13.universalimageloader.core.listener.ImageLoadingListener
 
 open class ImageLoader {
 
-    private val imageDefault:Int = R.mipmap.ic_launcher
+    private val imageDefault:Int = R.drawable.ic_default_image
     private lateinit var mContext: Context
 
     constructor(context: Context?){
