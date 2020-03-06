@@ -16,6 +16,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.IBinder
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 
 
@@ -35,8 +36,8 @@ open class GPSlocation : Service() {
         }else{
 
 
-            val NOTIFICATION_CHANNEL_ID = "com.example.simpleapp"
-            val channelName = "My Background Service"
+            val NOTIFICATION_CHANNEL_ID = "Let's run mate"
+            val channelName = "GPS background service"
             val chan = NotificationChannel(
                 NOTIFICATION_CHANNEL_ID,
                 channelName,
@@ -50,7 +51,7 @@ open class GPSlocation : Service() {
             val notificationBuilder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
             val notification = notificationBuilder.setOngoing(true)
                 .setSmallIcon(R.drawable.btn_plus)
-                .setContentTitle("App is running in background")
+                .setContentTitle("App is tracking your run! ")
                 .setPriority(NotificationManager.IMPORTANCE_MIN)
                 .setCategory(Notification.CATEGORY_SERVICE)
                 .build()
@@ -59,26 +60,27 @@ open class GPSlocation : Service() {
             manager2 = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             manager2.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
-                3000,
+                1000,
                 0f,
                 object : LocationListener {
                     override fun onLocationChanged(location: Location?) {
-                        val intent = Intent("location_update")
-                        intent.putExtra("coordinates", location)
-                        println("service ciagle dziala2")
-                        sendBroadcast(intent)
+                        val mIntent = Intent("location_update")
+                        mIntent.putExtra("coordinates", location)
+                        sendBroadcast(mIntent)
                     }
 
                     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        Toast.makeText(this@GPSlocation,"Status changed",Toast.LENGTH_LONG).show()
+
                     }
 
                     override fun onProviderEnabled(provider: String?) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        Toast.makeText(this@GPSlocation,"Gps tracking",Toast.LENGTH_LONG).show()
+
                     }
 
                     override fun onProviderDisabled(provider: String?) {
-                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                        Toast.makeText(this@GPSlocation,"Please turn on GPS Location",Toast.LENGTH_LONG).show()
                     }
                 })
         }

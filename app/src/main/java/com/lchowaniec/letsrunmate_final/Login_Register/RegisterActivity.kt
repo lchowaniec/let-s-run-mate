@@ -66,7 +66,6 @@ class RegisterActivity : AppCompatActivity() {
 
 
     private fun register_user( username: String, email: String, password: String) {
-        var usern = username
 
         if (reg_username.text.toString().isEmpty()){
             Toast.makeText(baseContext,"Please enter username",Toast.LENGTH_SHORT).show()
@@ -111,7 +110,7 @@ class RegisterActivity : AppCompatActivity() {
 
 
             if (task.isSuccessful) {
-                Toast.makeText(applicationContext,"Sign up success. Please confirm your e-mail",Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext,"Sign up success",Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
